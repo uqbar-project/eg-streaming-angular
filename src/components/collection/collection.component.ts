@@ -27,7 +27,11 @@ export class CollectionComponent implements OnInit {
       this.errorMessage = 'El contenido no puede ser vacío'
       return
     }
-    this.elements.push(this.value)
+    let value = this.value
+    if (this.type.toLowerCase() == 'number') {
+      value = Number.parseInt(this.value)
+    }
+    this.elements.push(value)
     this.value = ''
   }
 

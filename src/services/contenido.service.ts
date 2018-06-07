@@ -6,6 +6,7 @@ import { Contenido, Serie, Pelicula } from '../domain/contenido'
 })
 export class ContenidoService {
 
+  contenido : Contenido
   contenidos: Contenido[] = []
 
   constructor() {
@@ -46,4 +47,40 @@ export class ContenidoService {
   getContenidoById(id: number): Contenido {
     return this.contenidos.find((contenido) => contenido.id == id)
   }
+
+  actualizar(contenido: Contenido): void {
+    this.eliminar(contenido)
+    this.crear(contenido)
+  }
+
+  eliminar(contenido: Contenido): void {
+    const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
+    if (index != -1) {
+      this.contenidos.splice(index, 1)
+    }
+    this.contenido = null
+  }
+
+  getOrCreateContenido(tipoContenido: string) {
+    if (!this.contenido) {
+      // Malo recibir el string, pero está difícil pasarle un nuevo objeto en cada caso
+      if (tipoContenido == 'serie') {
+        this.contenido = new Serie()
+      } else {
+        this.contenido = new Pelicula()
+      }
+      this.contenido.id = this.lastId()
+    }
+    return this.contenido
+  }
+
+  crear(contenido: Contenido) {
+    this.contenidos.push(contenido)
+    this.contenido = null
+  }
+
+  cancelarCarga() {
+    this.contenido = null
+  }
+  
 }
