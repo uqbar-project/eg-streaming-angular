@@ -1,0 +1,27 @@
+<div class="form-inline">
+  <label for="text1">{{description}}:&nbsp;&nbsp;</label>
+  <input type="{{inputType}}" class="form-control" id="text_{{collection}}" placeholder="Ingrese un valor" [(ngModel)]="value">&nbsp;&nbsp;
+  <button (click)="agregar()" class="btn btn-primary">+</button>
+</div>
+<br>
+<div class="form-group">
+  <table class="table table-responsive-sm table-hover">
+    <thead class="table-secondary">
+      <tr>
+        <th scope="col">{{description}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elem of elements" class="animate-repeat">
+        <td>{{elem}}</td>
+        <td>
+          <button (click)="eliminar(elem)" class="btn btn-primary">-</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{errorMessage}}
+</div>

@@ -1,0 +1,23 @@
+<table class="table table-responsive-sm table-hover">
+    <thead class="table-info">
+      <tr>
+        <th scope="col">Título</th>
+        <th scope="col">Actores</th>
+        <th scope="col">Popularidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contenido of contenidos" class="animate-repeat">
+        <th scope="row" title="{{contenido.datosAdicionales()}}">
+          <img src="/assets/images/peli.png" title="Película" *ngIf="!contenido.esSerie()">
+          <img src="/assets/images/serie.gif" title="Serie" *ngIf="contenido.esSerie()">
+          &nbsp;
+          <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">
+            {{contenido.titulo}}
+          </a>
+        </th>
+        <td>{{contenido.protagonistas}}</td>
+        <td>{{contenido.popularidad}}</td>
+      </tr>
+    </tbody>
+  </table>
