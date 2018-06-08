@@ -37,9 +37,6 @@ export abstract class Contenido {
     }
 
     copy(): Contenido {
-        //no funciona correctamente
-        //const json = JSON.parse(JSON.stringify(this))
-        //result.init(json)
         const result = this.generateCopy()
         result.titulo = this.titulo
         result.id = this.id

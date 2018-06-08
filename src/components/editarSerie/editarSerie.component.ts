@@ -11,14 +11,13 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class EditarSerieComponent implements OnInit {
   contenido : Contenido
-  alta: boolean = false
 
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
   
   ngOnInit() {
     const paramId = this.route.snapshot.params.id
-    this.alta = paramId == 'new'
-    if (this.alta) {
+    const alta = paramId == 'new'
+    if (alta) {
       this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path) 
     } else {
       this.contenido = this.contenidoService.getContenidoById(paramId)
