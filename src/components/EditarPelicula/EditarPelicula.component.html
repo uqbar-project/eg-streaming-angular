@@ -1,3 +1,7 @@
-<p>
-  EditarPelicula works!
-</p>
+<div class="form-group">
+  <label for="titulo">Fecha de salida</label>
+  <my-date-picker id="fechaRelease" name="fechaRelease" 
+    [options]="opcionesFecha"
+    [(ngModel)]="fechaReleaseModel"
+    (inputFocusBlur)="actualizarFecha()"></my-date-picker>
+</div>

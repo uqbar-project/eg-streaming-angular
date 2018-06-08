@@ -37,16 +37,28 @@ export abstract class Contenido {
     }
 
     copy(): Contenido {
-        const json = JSON.parse(JSON.stringify(this))
+        //no funciona correctamente
+        //const json = JSON.parse(JSON.stringify(this))
+        //result.init(json)
         const result = this.generateCopy()
-        result.init(json)
+        result.titulo = this.titulo
+        result.id = this.id
+        result.actores = this.actores.slice()
+        result.calificaciones = this.calificaciones.slice()
+        this.doCopy(result)
         return result
+    }
+
+    abstract doCopy(result) : void
+
+    existe() {
+        return this.id != null && this.id > 0
     }
 
     tieneErrores() {
         return this.errors.length > 0
     }
-    abstract generateCopy() : Contenido
+    abstract generateCopy(): Contenido
     abstract doInit(data: any): void
     abstract get type(): string
 }
@@ -59,6 +71,9 @@ export class Serie extends Contenido {
     datosAdicionales(): string { return "" + this.temporadas + " temporadas" }
 
     doValidar(): void {
+        if (!this.temporadas) {
+            this.errors.push("Debe ingresar cantidad de temporadas")
+        }
     }
 
     doInit(data: any) {
@@ -70,15 +85,24 @@ export class Serie extends Contenido {
     generateCopy(): Contenido {
         return new Serie()
     }
+    
+    doCopy(result) {
+        result.temporadas = this.temporadas
+    }
 }
 
 export class Pelicula extends Contenido {
-    fechaRelease: Date
+    fechaRelease: Date = new Date()
 
-    datosAdicionales(): string { return "Lanzado en el año " + this.fechaRelease.getUTCFullYear() }
+    datosAdicionales(): string { 
+        if (!this.fechaRelease) return ""
+        return "Lanzado en el año " + this.fechaRelease.getUTCFullYear() 
+    }
 
     doValidar(): void {
-
+        if (!this.fechaRelease) {
+            this.errors.push("Debe ingresar fecha de salida")
+        }
     }
 
     doInit(data: any) {
@@ -87,7 +111,11 @@ export class Pelicula extends Contenido {
 
     get type() { return "pelicula" }
 
-    generateCopy() : Contenido {
+    generateCopy(): Contenido {
         return new Pelicula()
+    }
+
+    doCopy(result) {
+        result.fechaRelease = this.fechaRelease
     }
 }

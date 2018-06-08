@@ -37,7 +37,13 @@ export class CollectionComponent implements OnInit {
 
   eliminar(elem) {
     this.errorMessage = ''
-    this.elements = this.elements.filter((item) => item != elem)
+
+    const index = this.elements.findIndex((item) => item == elem)
+    if (index != -1) {
+      this.elements.splice(index, 1)
+    }
+    // No conviene modificar el objeto colección porque no se reflejan los cambios en el objeto observado
+    //this.elements = this.elements.filter((item) => item != elem)
   }
 
   get inputType() : string {

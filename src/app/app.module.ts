@@ -5,6 +5,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { FormsModule } from '@angular/forms'
 import { CollectionComponent } from '../components/collection/collection.component'
+import { MyDatePickerModule, MyDatePicker } from 'mydatepicker'
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CollectionComponent } from '../components/collection/collection.compone
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MyDatePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

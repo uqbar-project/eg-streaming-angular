@@ -11,8 +11,8 @@ export class ContenidoService {
 
   constructor() {
     this.insertSerie("Lost", ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6)
-    this.insertPelicula("The Wolf of Wall Street", ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], new Date(2013,12,23))
-    this.insertPelicula("Inglorious Basterds", ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], new Date(2009,8,21))
+    this.insertPelicula("The Wolf of Wall Street", ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], new Date(2013,11,23))
+    this.insertPelicula("Inglorious Basterds", ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], new Date(2009,7,21))
     this.insertSerie("Homeland", ['Claire Danes', 'Mandy Patinkin'], [8, 8, 7, 7, 8], 8)
   }
 
@@ -49,7 +49,9 @@ export class ContenidoService {
   }
 
   actualizar(contenido: Contenido): void {
-    this.eliminar(contenido)
+    if (contenido.existe()) {
+      this.eliminar(contenido)
+    }
     this.crear(contenido)
   }
 
@@ -58,7 +60,6 @@ export class ContenidoService {
     if (index != -1) {
       this.contenidos.splice(index, 1)
     }
-    this.contenido = null
   }
 
   getOrCreateContenido(tipoContenido: string) {
@@ -76,11 +77,10 @@ export class ContenidoService {
 
   crear(contenido: Contenido) {
     this.contenidos.push(contenido)
+  }
+
+  init() {
     this.contenido = null
   }
 
-  cancelarCarga() {
-    this.contenido = null
-  }
-  
 }

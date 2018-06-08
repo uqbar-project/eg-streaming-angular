@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { EditarContenidoComponent } from '../editarContenido/editarContenido.component'
-import { Contenido } from '../../domain/contenido';
-import { ContenidoService } from '../../services/contenido.service';
-import { ActivatedRoute } from '@angular/router';
+import { Contenido } from '../../domain/contenido'
+import { ContenidoService } from '../../services/contenido.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-editarSerie',
