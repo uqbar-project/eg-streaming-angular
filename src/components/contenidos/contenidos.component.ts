@@ -18,6 +18,10 @@ export class ContenidosComponent implements OnInit {
     this.contenidos = this.contenidoService.contenidos
   }
 
+  eliminar(contenido : Contenido) {
+    this.contenidoService.eliminar(contenido)
+  }
+
   nuevaSerie() {
     this.contenidoService.init()
     this.router.navigate(['edit/serie/new'])

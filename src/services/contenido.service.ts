@@ -8,6 +8,7 @@ export class ContenidoService {
 
   contenido : Contenido
   contenidos: Contenido[] = []
+  static lastId : number = 0
 
   constructor() {
     this.insertSerie("Lost", ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6)
@@ -41,7 +42,8 @@ export class ContenidoService {
   }
 
   lastId(): number {
-    return this.contenidos.length + 1
+    ContenidoService.lastId = ContenidoService.lastId + 1
+    return ContenidoService.lastId
   }
 
   getContenidoById(id: number): Contenido {

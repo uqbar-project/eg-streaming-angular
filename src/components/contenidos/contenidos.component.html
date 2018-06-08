@@ -10,6 +10,7 @@
         <th scope="col">Título</th>
         <th scope="col">Actores</th>
         <th scope="col">Popularidad</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +25,9 @@
         </th>
         <td>{{contenido.protagonistas}}</td>
         <td>{{contenido.popularidad}}</td>
+        <td>
+          <button (click)="eliminar(contenido)" class="btn btn-primary">-</button>
+        </td>
       </tr>
     </tbody>
   </table>
