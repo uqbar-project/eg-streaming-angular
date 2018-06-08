@@ -104,7 +104,7 @@ contenido.type es un método del negocio que simplemente devuelve 'serie' o 'pel
 La vista que edita la serie (alta o edición) se forma en base a las URL:
 
 - EditarContenidoComponent ingresa los campos título, actores, calificaciones, los botones aceptar y cancelar y un div que muestra los errores de validación del contenido editado
-- EditarSerie agrega el campo cantidad de temporadas
+- EditarSerie agrega el campo cantidad de temporadas, y se intercala en la vista que edita el contenido mediante `<router-outlet></router-outlet>`
 - a su vez, el EditarContenidoComponent llama a un **componente genérico que permite ingresar colecciones de valores simples: collection.component**: así se cargan los actores como una lista de strings, y las calificaciones como una lista de números. El componente permite agregar o eliminar esa lista en la serie.
 
 Vemos la definición de la vista EditarContenidoComponent:
