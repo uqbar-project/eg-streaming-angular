@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { Contenido, Serie } from '../../domain/contenido'
+import { Contenido } from '../../domain/contenido'
 import { ContenidoService } from '../../services/contenido.service'
 
 @Component({

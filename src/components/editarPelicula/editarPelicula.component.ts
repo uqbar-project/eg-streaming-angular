@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Contenido, Pelicula } from '../../domain/contenido'
+import { Pelicula } from '../../domain/contenido'
 import { ActivatedRoute } from '@angular/router'
 import { ContenidoService } from '../../services/contenido.service'
 
