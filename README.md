@@ -160,14 +160,20 @@ Al editar/crear una serie, debemos tener cuidado de que los dos componentes **ap
 El método getOrCreateContenido funciona para el alta, la primera vez crea una serie o una película (en base al path que le pasamos) y lo guarda temporalmente en el service dentro de una variable:
 
 ```typescript
+// Creamos un mapa antes de la definición de la clase ContenidoService
+const tiposContenido = {
+  'serie': new Serie(),
+  'pelicula': new Pelicula()
+}
+
+export class ContenidoService {
+
   getOrCreateContenido(tipoContenido: string) {
     if (!this.contenido) {
-      // Malo recibir el string, pero está difícil pasarle un nuevo objeto en cada caso
-      if (tipoContenido == 'serie') {
-        this.contenido = new Serie()
-      } else {
-        this.contenido = new Pelicula()
-      }
+      // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
+      console.log("contenido", tiposContenido[tipoContenido])
+      console.log("que me das", tiposContenido[tipoContenido].copy())
+      this.contenido = tiposContenido[tipoContenido].copy()
       this.contenido.id = this.lastId()
     }
     return this.contenido
@@ -220,7 +226,7 @@ El método actualizar() del service hace lo siguiente:
   }
 ```
 
-El método eliminar en realidad busca el elemento por id, no exactamente ése objeto:
+El método eliminar en realidad busca el elemento por id, no exactamente ese objeto:
 
 ```typescript
   eliminar(contenido: Contenido): void {
@@ -265,7 +271,37 @@ copy(): Contenido {
 }
 ```
 
-no tiene en cuenta los métodos de Serie o Película, por lo que deberíamos hacer otro método que tome los valores JSON y cree correctamente el objeto.
+no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, como si fuera un JSON sin comportamiento). La solución es unir ambas propuestas:
+
+- con Object.assign() partimos de un objeto original, con métodos
+- mediante el JSON.parse(JSON.stringify(this)) obtenemos una **copia profunda** del objeto, sin que afecte a las colecciones existentes
+
+```typescript
+    copy(): Contenido {
+        return Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
+    }
+```
+
+this.generateCopy() es un **factory method** que devuelve una serie o una película.
+
+Esto "casi siempre" funciona, salvo por las fechas, cuándo no. Hay que usar un pequeño template method como ajuste, copiando a mano la fecha para que no lo reconvierta a string:
+
+```typescript
+    // en la clase Contenido
+    copy(): Contenido {
+        const clone = Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
+        clone.doCopy(this)
+        return clone 
+    }
+
+    doCopy(contenido: Contenido): void {}
+
+    // en la clase Pelicula
+    doCopy(contenido: Contenido): void {
+        this.fechaRelease = (contenido as Pelicula).fechaRelease
+    }
+
+```
 
 Entonces al cancelar lo que hacemos es actualizar la colección del service con el elemento original:
 

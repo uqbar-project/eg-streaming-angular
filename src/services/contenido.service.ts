@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Contenido, Serie, Pelicula } from '../domain/contenido'
+import { Contenido, Serie, Pelicula } from '../domain/contenido';
+
+const tiposContenido = {
+  'serie': new Serie(),
+  'pelicula': new Pelicula()
+}
 
 @Injectable({
   providedIn: 'root'
@@ -66,12 +71,8 @@ export class ContenidoService {
 
   getOrCreateContenido(tipoContenido: string) {
     if (!this.contenido) {
-      // Malo recibir el string, pero está difícil pasarle un nuevo objeto en cada caso
-      if (tipoContenido == 'serie') {
-        this.contenido = new Serie()
-      } else {
-        this.contenido = new Pelicula()
-      }
+      // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
+      this.contenido = tiposContenido[tipoContenido].copy()
       this.contenido.id = this.lastId()
     }
     return this.contenido

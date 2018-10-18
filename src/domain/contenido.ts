@@ -1,3 +1,5 @@
+import * as _ from "lodash"
+
 export abstract class Contenido {
     id: number
     titulo: string = ""
@@ -19,8 +21,7 @@ export abstract class Contenido {
 
     get popularidad(): string {
         if (this.calificaciones.length == 0) return ""
-        const total = this.calificaciones.reduce((a, b) => a + b, 0)
-        return (total / this.calificaciones.length).toFixed(2).replace('.', ',')
+        return _.mean(this.calificaciones).toFixed(2).replace('.', ',')
     }
 
     esSerie() { return false }
@@ -37,16 +38,12 @@ export abstract class Contenido {
     }
 
     copy(): Contenido {
-        const result = this.generateCopy()
-        result.titulo = this.titulo
-        result.id = this.id
-        result.actores = this.actores.slice()
-        result.calificaciones = this.calificaciones.slice()
-        this.doCopy(result)
-        return result
+        const clone = Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
+        clone.doCopy(this)
+        return clone 
     }
 
-    abstract doCopy(result) : void
+    doCopy(contenido: Contenido): void {}
 
     existe() {
         return this.id != null && this.id > 0
@@ -83,9 +80,6 @@ export class Serie extends Contenido {
         return new Serie()
     }
     
-    doCopy(result) {
-        result.temporadas = this.temporadas
-    }
 }
 
 export class Pelicula extends Contenido {
@@ -112,7 +106,8 @@ export class Pelicula extends Contenido {
         return new Pelicula()
     }
 
-    doCopy(result) {
-        result.fechaRelease = this.fechaRelease
+    doCopy(contenido: Contenido): void {
+        this.fechaRelease = (contenido as Pelicula).fechaRelease
     }
+
 }
