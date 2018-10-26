@@ -11,7 +11,6 @@ import { ContenidoService } from '../../services/contenido.service'
 export class EditarPeliculaComponent implements OnInit {
 
   contenido : Pelicula
-  alta : boolean = false
   opcionesFecha = {}
   fechaReleaseModel = {}
 
@@ -19,8 +18,8 @@ export class EditarPeliculaComponent implements OnInit {
 
   ngOnInit() {
     const paramId = this.route.snapshot.params.id
-    this.alta = paramId == 'new'
-    if (this.alta) {
+    const alta = paramId == 'new'
+    if (alta) {
       this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path) as Pelicula
     } else {
       this.contenido = this.contenidoService.getContenidoById(paramId) as Pelicula
