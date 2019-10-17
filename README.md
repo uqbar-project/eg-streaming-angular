@@ -1,6 +1,8 @@
 
 # Streaming - aplicación compleja en Angular
 
+[![Build Status](https://www.travis-ci.org/uqbar-project/eg-streaming-angular.svg?branch=master)](https://www.travis-ci.org/uqbar-project/eg-streaming-angular)
+
 Este ejemplo permite mostrar cómo se puede reutilizar componentes visuales y funcionalidades en Angular. 
 
 ![video](video/demo.gif)
