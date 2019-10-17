@@ -3,8 +3,8 @@ import { Contenido, Serie, Pelicula } from '../domain/contenido';
 import * as _ from 'lodash'
 
 const tiposContenido = {
-  'serie': new Serie(),
-  'pelicula': new Pelicula()
+  'serie': () => new Serie(),
+  'pelicula': () => new Pelicula()
 }
 
 @Injectable({
@@ -52,10 +52,8 @@ export class ContenidoService {
     return ContenidoService.lastId
   }
 
-  getContenidoById(idParam: number): Contenido {
-    const id = Number(idParam)
-    return _.find(this.contenidos, { id })
-    // return this.contenidos.find((contenido) => contenido.id === Number(id))
+  getContenidoById(id: string): Contenido {
+    return this.contenidos.find((contenido) => contenido.id === Number(id))
   }
 
   actualizar(contenido: Contenido): void {
@@ -78,7 +76,7 @@ export class ContenidoService {
   getOrCreateContenido(tipoContenido: string) {
     if (!this.contenido) {
       // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
-      this.contenido = tiposContenido[tipoContenido].copy()
+      this.contenido = tiposContenido[tipoContenido]()
       this.contenido.id = this.lastId()
     }
     return this.contenido

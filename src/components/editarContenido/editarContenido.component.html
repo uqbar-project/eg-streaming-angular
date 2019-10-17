@@ -1,14 +1,16 @@
 <form>
   <div class="form-group">
     <label for="titulo">Título</label>
-    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título del contenido" [(ngModel)]="contenido.titulo">
+    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título del contenido"
+      [(ngModel)]="contenido.titulo">
   </div>
   <div class="row">
     <div class="col-sm">
       <app-collection [container]="contenido" collection="actores" type="text" description="Actores"></app-collection>
     </div>
     <div class="col-sm">
-      <app-collection [container]="contenido" collection="calificaciones" type="number" description="Calificaciones"></app-collection>
+      <app-collection [container]="contenido" collection="calificaciones" type="number" description="Calificaciones">
+      </app-collection>
     </div>
   </div>
   <router-outlet></router-outlet>

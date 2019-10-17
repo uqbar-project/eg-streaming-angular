@@ -21,7 +21,7 @@ export class EditarContenidoComponent implements OnInit {
   ngOnInit() {
     const paramId = this.route.firstChild.snapshot.params.id
     this.alta = paramId === 'new'
-    console.log('ngOnInit')
+    console.log('ngOnInit de Editar Contenido Component')
     if (this.alta) {
       this.contenido = this.contenidoService.getOrCreateContenido(this.route.firstChild.snapshot.url[0].path)
     } else {

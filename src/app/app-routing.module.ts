@@ -6,19 +6,20 @@ import { EditarSerieComponent } from '../components/editarSerie/editarSerie.comp
 import { EditarPeliculaComponent } from '../components/editarPelicula/editarPelicula.component'
 
 const routes: Routes = [
-  { path: '',        redirectTo: '/list', pathMatch: 'full' },
-  { path: 'list',    component: ContenidosComponent },
-  { path: 'edit',    component: EditarContenidoComponent, children: [
+  { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: 'list', component: ContenidosComponent },
+  {
+    path: 'edit', component: EditarContenidoComponent, children: [
       { path: 'serie/:id', component: EditarSerieComponent },
       { path: 'pelicula/:id', component: EditarPeliculaComponent }
-    ] 
+    ]
   }
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],  
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [ ContenidosComponent, EditarContenidoComponent, EditarSerieComponent, EditarPeliculaComponent ]
+export const routingComponents = [ContenidosComponent, EditarContenidoComponent, EditarSerieComponent, EditarPeliculaComponent]
