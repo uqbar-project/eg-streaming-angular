@@ -1,8 +1,10 @@
-import * as _ from "lodash"
+import * as _ from 'lodash'
+
+export const ASSET_FOLDER = '/assets/images/'
 
 export abstract class Contenido {
     id: number
-    titulo: string = ""
+    titulo = ''
     actores: string[] = []
     calificaciones: number[] = []
     errors: string[] = []
@@ -10,7 +12,7 @@ export abstract class Contenido {
     validar(): void {
         this.errors = []
         if (!this.titulo) {
-            this.errors.push("Debe ingresar título")
+            this.errors.push('Debe ingresar título')
         }
         this.doValidar()
     }
@@ -20,12 +22,11 @@ export abstract class Contenido {
     }
 
     get popularidad(): string {
-        if (this.calificaciones.length == 0) return ""
+        if (_.isEmpty(this.calificaciones)) { return '' }
         return _.mean(this.calificaciones).toFixed(2).replace('.', ',')
     }
 
-    esSerie() { return false }
-
+    abstract image(): string
     abstract doValidar(): void
     abstract datosAdicionales(): string
 
@@ -40,10 +41,10 @@ export abstract class Contenido {
     copy(): Contenido {
         const clone = Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
         clone.doCopy(this)
-        return clone 
+        return clone
     }
 
-    doCopy(contenido: Contenido): void {}
+    doCopy(contenido: Contenido): void { }
 
     existe() {
         return this.id != null && this.id > 0
@@ -60,13 +61,15 @@ export abstract class Contenido {
 export class Serie extends Contenido {
     temporadas: number
 
-    esSerie() { return true }
+    label() {
+        return 'Serie'
+    }
 
-    datosAdicionales(): string { return "" + this.temporadas + " temporadas" }
+    datosAdicionales(): string { return '' + this.temporadas + ' temporadas' }
 
     doValidar(): void {
         if (!this.temporadas) {
-            this.errors.push("Debe ingresar cantidad de temporadas")
+            this.errors.push('Debe ingresar cantidad de temporadas')
         }
     }
 
@@ -74,25 +77,37 @@ export class Serie extends Contenido {
         this.temporadas = data.temporadas
     }
 
-    get type() { return "serie" }
+    image() {
+        return ASSET_FOLDER + 'serie.gif'
+    }
+
+    get type() { return 'serie' }
 
     generateCopy(): Contenido {
         return new Serie()
     }
-    
+
 }
 
 export class Pelicula extends Contenido {
     fechaRelease: Date = new Date()
 
-    datosAdicionales(): string { 
-        if (!this.fechaRelease) return ""
-        return "Lanzado en el año " + this.fechaRelease.getUTCFullYear() 
+    label() {
+        return 'Película'
+    }
+
+    image() {
+        return ASSET_FOLDER + 'peli.png'
+    }
+
+    datosAdicionales(): string {
+        if (!this.fechaRelease) { return '' }
+        return 'Lanzado en el año ' + this.fechaRelease.getUTCFullYear()
     }
 
     doValidar(): void {
         if (!this.fechaRelease) {
-            this.errors.push("Debe ingresar fecha de salida")
+            this.errors.push('Debe ingresar fecha de salida')
         }
     }
 
@@ -100,7 +115,7 @@ export class Pelicula extends Contenido {
         this.fechaRelease = data.fechaRelease
     }
 
-    get type() { return "pelicula" }
+    get type() { return 'pelicula' }
 
     generateCopy(): Contenido {
         return new Pelicula()

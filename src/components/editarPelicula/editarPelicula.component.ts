@@ -10,20 +10,22 @@ import { ContenidoService } from '../../services/contenido.service'
 })
 export class EditarPeliculaComponent implements OnInit {
 
-  contenido : Pelicula
+  contenido: Pelicula
   opcionesFecha = {}
   fechaReleaseModel = {}
 
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log('ngOnInit')
     const paramId = this.route.snapshot.params.id
-    const alta = paramId == 'new'
+    const alta = paramId === 'new'
     if (alta) {
       this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path) as Pelicula
     } else {
       this.contenido = this.contenidoService.getContenidoById(paramId) as Pelicula
     }
+    console.log('this.contenido', this.contenido)
 
     this.opcionesFecha = {
       dateFormat: 'dd/mm/yyyy'
@@ -38,17 +40,17 @@ export class EditarPeliculaComponent implements OnInit {
   }
 
   convertirADate(fecha: any): Date {
-    if (!fecha) return null
+    if (!fecha) { return null }
     return new Date(fecha.year, fecha.month - 1, fecha.day)
   }
 
   convertirANuevoDate(fecha: Date) {
-    if (fecha == null) return null
+    if (fecha == null) { return null }
     return {
       year: fecha.getFullYear(),
       month: fecha.getMonth() + 1,
       day: fecha.getDate()
     }
-  } 
+  }
 
 }

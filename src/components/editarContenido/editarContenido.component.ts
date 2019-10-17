@@ -12,20 +12,22 @@ export class EditarContenidoComponent implements OnInit {
 
   contenido: Contenido
   contenidoOld: Contenido
-  alta: boolean = false
+  alta = false
 
-  constructor(private router: Router, private route: ActivatedRoute, private contenidoService: ContenidoService) { 
+  constructor(private router: Router, private route: ActivatedRoute, private contenidoService: ContenidoService) {
     this.contenidoService.init()
   }
 
   ngOnInit() {
     const paramId = this.route.firstChild.snapshot.params.id
-    this.alta = paramId == 'new'
+    this.alta = paramId === 'new'
+    console.log('ngOnInit')
     if (this.alta) {
       this.contenido = this.contenidoService.getOrCreateContenido(this.route.firstChild.snapshot.url[0].path)
     } else {
       this.contenido = this.contenidoService.getContenidoById(paramId)
     }
+    console.log('contenido', this.contenido)
     this.contenidoOld = this.contenido.copy()
   }
 
@@ -39,7 +41,7 @@ export class EditarContenidoComponent implements OnInit {
 
   cancelar(): void {
     if (!this.alta) {
-       this.contenidoService.actualizar(this.contenidoOld)
+      this.contenidoService.actualizar(this.contenidoOld)
     }
     this.navegarAHome()
   }

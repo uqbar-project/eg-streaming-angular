@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Contenido, Serie, Pelicula } from '../domain/contenido';
+import * as _ from 'lodash'
 
 const tiposContenido = {
   'serie': new Serie(),
@@ -11,16 +12,16 @@ const tiposContenido = {
 })
 export class ContenidoService {
 
-  contenido : Contenido
-  contenidos: Contenido[] = []
-  static lastId : number = 0
-
   constructor() {
-    this.insertSerie("Lost", ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6)
-    this.insertPelicula("The Wolf of Wall Street", ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], new Date(2013,11,23))
-    this.insertPelicula("Inglorious Basterds", ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], new Date(2009,7,21))
-    this.insertSerie("Homeland", ['Claire Danes', 'Mandy Patinkin'], [8, 8, 7, 7, 8], 8)
+    this.insertSerie('Lost', ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6)
+    this.insertPelicula('The Wolf of Wall Street', ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], new Date(2013, 11, 23))
+    this.insertPelicula('Inglorious Basterds', ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], new Date(2009, 7, 21))
+    this.insertSerie('Homeland', ['Claire Danes', 'Mandy Patinkin'], [8, 8, 7, 7, 8], 8)
   }
+  static lastId = 0
+
+  contenido: Contenido
+  contenidos: Contenido[] = []
 
   insertSerie(titulo: string, actores: string[], calificaciones: number[], temporadas: number) {
     const serie = new Serie()
@@ -51,8 +52,10 @@ export class ContenidoService {
     return ContenidoService.lastId
   }
 
-  getContenidoById(id: number): Contenido {
-    return this.contenidos.find((contenido) => contenido.id == id)
+  getContenidoById(idParam: number): Contenido {
+    const id = Number(idParam)
+    return _.find(this.contenidos, { id })
+    // return this.contenidos.find((contenido) => contenido.id === Number(id))
   }
 
   actualizar(contenido: Contenido): void {
@@ -63,10 +66,13 @@ export class ContenidoService {
   }
 
   eliminar(contenido: Contenido): void {
-    const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
-    if (index != -1) {
-      this.contenidos.splice(index, 1)
-    }
+    this.contenidos = _.remove(this.contenidos, contenido)
+    // según Stack Overflow
+    // https://stackoverflow.com/questions/15292278/how-do-i-remove-an-array-item-in-typescript
+    // const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
+    // if (index != -1) {
+    //   this.contenidos.splice(index, 1)
+    // }
   }
 
   getOrCreateContenido(tipoContenido: string) {

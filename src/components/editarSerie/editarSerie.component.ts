@@ -9,18 +9,18 @@ import { ActivatedRoute } from '@angular/router'
   styleUrls: ['./editarSerie.component.css']
 })
 export class EditarSerieComponent implements OnInit {
-  contenido : Contenido
+  contenido: Contenido
 
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
-  
+
   ngOnInit() {
     const paramId = this.route.snapshot.params.id
-    const alta = paramId == 'new'
+    const alta = paramId === 'new'
     if (alta) {
-      this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path) 
+      this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path)
     } else {
       this.contenido = this.contenidoService.getContenidoById(paramId)
     }
   }
-  
+
 }

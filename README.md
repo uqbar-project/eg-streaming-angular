@@ -56,7 +56,7 @@ Tanto la serie como la película comparten
 - la lista de actores
 - la lista de calificaciones
 
-pero se diferencian 
+pero se diferencian
 
 - en que la serie sabe la cantidad de temporadas que tiene/tuvo
 - mientras que la película tiene una fecha de release o de salida al mercado
@@ -72,7 +72,7 @@ const routes: Routes = [
   { path: 'edit',    component: EditarContenidoComponent, children: [
       { path: 'serie/:id', component: EditarSerieComponent },
       { path: 'pelicula/:id', component: EditarPeliculaComponent }
-    ] 
+    ]
   }
 ]
 ```
@@ -232,10 +232,7 @@ El método eliminar en realidad busca el elemento por id, no exactamente ese obj
 
 ```typescript
   eliminar(contenido: Contenido): void {
-    const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
-    if (index != -1) {
-      this.contenidos.splice(index, 1)
-    }
+    this.contenidos = _.remove(this.contenidos, contenido)
   }
 ```
 

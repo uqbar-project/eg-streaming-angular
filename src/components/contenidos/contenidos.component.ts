@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ContenidoService } from '../../services/contenido.service'
 import { Contenido } from '../../domain/contenido'
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-contenidos',
@@ -13,12 +13,12 @@ export class ContenidosComponent implements OnInit {
   contenidos: Contenido[]
 
   constructor(private contenidoService: ContenidoService, private router: Router) { }
-  
+
   ngOnInit() {
     this.contenidos = this.contenidoService.contenidos
   }
 
-  eliminar(contenido : Contenido) {
+  eliminar(contenido: Contenido) {
     this.contenidoService.eliminar(contenido)
   }
 
