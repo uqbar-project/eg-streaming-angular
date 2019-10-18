@@ -64,7 +64,7 @@ export class ContenidoService {
   }
 
   eliminar(contenido: Contenido): void {
-    this.contenidos = _.remove(this.contenidos, contenido)
+    _.remove(this.contenidos, contenido)
     // según Stack Overflow
     // https://stackoverflow.com/questions/15292278/how-do-i-remove-an-array-item-in-typescript
     // const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
