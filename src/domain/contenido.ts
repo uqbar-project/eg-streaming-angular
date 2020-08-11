@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import { isEmpty, mean } from 'lodash'
 
 export const ASSET_FOLDER = '/assets/images/'
 
@@ -22,8 +22,10 @@ export abstract class Contenido {
     }
 
     get popularidad(): string {
-        if (_.isEmpty(this.calificaciones)) { return '' }
-        return _.mean(this.calificaciones).toFixed(2).replace('.', ',')
+        if (isEmpty(this.calificaciones)) {
+            return ''
+        }
+        return mean(this.calificaciones).toFixed(2).replace('.', ',')
     }
 
     abstract image(): string

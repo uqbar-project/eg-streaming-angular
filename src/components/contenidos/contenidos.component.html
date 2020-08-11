@@ -15,13 +15,12 @@
   </thead>
   <tbody>
     <tr *ngFor="let contenido of contenidos" class="animate-repeat">
-      <th scope="row" title="{{contenido.datosAdicionales()}}">
+      <td class="titulo" scope="row" title="{{contenido.datosAdicionales()}}">
         <img src="{{contenido.image()}}" title="{{contenido.label()}}">
-        &nbsp;
         <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">
           {{contenido.titulo}}
         </a>
-      </th>
+      </td>
       <td>{{contenido.protagonistas}}</td>
       <td>{{contenido.popularidad}}</td>
       <td>

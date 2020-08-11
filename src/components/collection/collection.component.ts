@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core'
-import * as _ from 'lodash'
+import { Component, Input, OnInit } from '@angular/core'
+import { remove } from 'lodash'
 
 @Component({
   selector: 'app-collection',
@@ -40,7 +40,11 @@ export class CollectionComponent implements OnInit {
     this.errorMessage = ''
 
     // usamos Lodash: https://lodash.com/docs/latest#remove
-    _.remove(this.elements, (e) => elem === e)
+    // importamos remove como función, 
+    // una alternativa es usarlo como objeto _.remove(...)
+    // e importarlo como `import * as _ from 'lodash'`
+    // pero eso importa TODAS las funciones y el bundle crece en tamaño
+    remove(this.elements, (e) => elem === e)
 
     // otra opción
     // this.elements = this.elements.filter((item) => item !== elem)

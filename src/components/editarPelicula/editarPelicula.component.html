@@ -1,7 +1,21 @@
 <div class="form-group">
   <label for="titulo">Fecha de salida</label>
-  <my-date-picker id="fechaRelease" name="fechaRelease" 
-    [options]="opcionesFecha"
-    [(ngModel)]="fechaReleaseModel"
-    (inputFocusBlur)="actualizarFecha()"></my-date-picker>
+  <div class="input-group">
+    <input class="form-control" name="fechaRelease" data-testid="fechaRelease" placeholder="Seleccione una fecha"
+      angular-mydatepicker #dp="angular-mydatepicker" [options]="opcionesFecha" [(ngModel)]="fechaReleaseModel"
+      (dateChanged)="convertirADate($event)" required />
+    <!-- clear date button -->
+    <div class="input-group-append">
+      <button type="button" class="btn btn-secondary" *ngIf="fechaReleaseModel" (click)="dp.clearDate()">
+        <fa-icon [icon]="faCalendarTimes"></fa-icon>
+      </button>
+    </div>
+
+    <!-- toggle calendar button -->
+    <div class="input-group-append">
+      <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
+        <fa-icon [icon]="faCalendar"></fa-icon>
+      </button>
+    </div>
+  </div>
 </div>

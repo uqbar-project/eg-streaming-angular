@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Contenido, Serie, Pelicula } from '../domain/contenido';
-import * as _ from 'lodash'
+import { Injectable } from '@angular/core'
+import { remove } from 'lodash'
+
+import { Contenido, Pelicula, Serie } from '../domain/contenido'
 
 const tiposContenido = {
   'serie': () => new Serie(),
@@ -64,7 +65,7 @@ export class ContenidoService {
   }
 
   eliminar(contenido: Contenido): void {
-    _.remove(this.contenidos, contenido)
+    remove(this.contenidos, contenido)
     // según Stack Overflow
     // https://stackoverflow.com/questions/15292278/how-do-i-remove-an-array-item-in-typescript
     // const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
