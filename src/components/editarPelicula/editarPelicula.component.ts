@@ -22,15 +22,7 @@ export class EditarPeliculaComponent implements OnInit {
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log('ngOnInit de Editar Pelicula Component')
-    const paramId = this.route.snapshot.params.id
-    const alta = paramId === 'new'
-    if (alta) {
-      this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path) as Pelicula
-    } else {
-      this.contenido = this.contenidoService.getContenidoById(paramId) as Pelicula
-    }
-    console.log('this.contenido', this.contenido)
+    this.contenido = this.contenidoService.contenido as Pelicula
 
     this.fechaReleaseModel = {
       isRange: false,

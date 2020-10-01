@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+
 import { Contenido } from '../../domain/contenido'
 import { ContenidoService } from '../../services/contenido.service'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-editarSerie',
@@ -14,13 +15,7 @@ export class EditarSerieComponent implements OnInit {
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const paramId = this.route.snapshot.params.id
-    const alta = paramId === 'new'
-    if (alta) {
-      this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path)
-    } else {
-      this.contenido = this.contenidoService.getContenidoById(paramId)
-    }
+    this.contenido = this.contenidoService.contenido
   }
 
 }

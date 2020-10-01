@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { remove } from 'lodash'
 
 import { Contenido, Pelicula, Serie } from '../domain/contenido'
 
@@ -28,10 +27,10 @@ export class ContenidoService {
     const serie = new Serie()
     serie.init({
       id: this.lastId(),
-      titulo: titulo,
-      actores: actores,
-      calificaciones: calificaciones,
-      temporadas: temporadas
+      titulo,
+      actores,
+      calificaciones,
+      temporadas,
     })
     this.contenidos.push(serie)
   }
@@ -40,10 +39,10 @@ export class ContenidoService {
     const peli = new Pelicula()
     peli.init({
       id: this.lastId(),
-      titulo: titulo,
-      actores: actores,
-      calificaciones: calificaciones,
-      fechaRelease: fechaRelease
+      titulo,
+      actores,
+      calificaciones,
+      fechaRelease,
     })
     this.contenidos.push(peli)
   }
@@ -53,11 +52,12 @@ export class ContenidoService {
     return ContenidoService.lastId
   }
 
-  getContenidoById(id: string): Contenido {
-    return this.contenidos.find((contenido) => contenido.id === Number(id))
+  updateContenidoById(id: string): void {
+    this.contenido = this.contenidos.find((contenido) => contenido.id === Number(id))
   }
 
   actualizar(contenido: Contenido): void {
+    console.log('contenido existe', contenido.existe(), contenido)
     if (contenido.existe()) {
       this.eliminar(contenido)
     }
@@ -65,22 +65,19 @@ export class ContenidoService {
   }
 
   eliminar(contenido: Contenido): void {
-    remove(this.contenidos, contenido)
+    // remove(this.contenidos, contenido)
     // según Stack Overflow
     // https://stackoverflow.com/questions/15292278/how-do-i-remove-an-array-item-in-typescript
-    // const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
-    // if (index != -1) {
-    //   this.contenidos.splice(index, 1)
-    // }
+    const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
+    if (index != -1) {
+      this.contenidos.splice(index, 1)
+    }
   }
 
-  getOrCreateContenido(tipoContenido: string) {
-    if (!this.contenido) {
-      // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
-      this.contenido = tiposContenido[tipoContenido]()
-      this.contenido.id = this.lastId()
-    }
-    return this.contenido
+  createContenido(tipoContenido: string): void {
+    // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
+    this.contenido = tiposContenido[tipoContenido]()
+    this.contenido.id = this.lastId()
   }
 
   crear(contenido: Contenido) {

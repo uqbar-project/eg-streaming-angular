@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { Router, ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
+
 import { Contenido } from '../../domain/contenido'
 import { ContenidoService } from '../../services/contenido.service'
 
@@ -19,15 +20,16 @@ export class EditarContenidoComponent implements OnInit {
   }
 
   ngOnInit() {
-    const paramId = this.route.firstChild.snapshot.params.id
-    this.alta = paramId === 'new'
-    console.log('ngOnInit de Editar Contenido Component')
-    if (this.alta) {
-      this.contenido = this.contenidoService.getOrCreateContenido(this.route.firstChild.snapshot.url[0].path)
-    } else {
-      this.contenido = this.contenidoService.getContenidoById(paramId)
-    }
-    console.log('contenido', this.contenido)
+    this.route.url.subscribe((url) => {
+      const paramId = this.route.firstChild.snapshot.params.id
+      this.alta = paramId === 'new'
+      if (this.alta) {
+        this.contenidoService.createContenido(this.route.firstChild.snapshot.url[0].path)
+      } else {
+        this.contenidoService.updateContenidoById(paramId)
+      }
+    })
+    this.contenido = this.contenidoService.contenido
     this.contenidoOld = this.contenido.copy()
   }
 
