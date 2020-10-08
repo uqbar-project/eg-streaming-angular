@@ -276,7 +276,7 @@ no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, 
 
 this.generateCopy() es un **factory method** que devuelve una serie o una película.
 
-Esto "casi siempre" funciona, salvo por las fechas, cuándo no. Hay que usar un pequeño template method como ajuste, copiando a mano la fecha para que no lo reconvierta a string:
+Esto "casi siempre" funciona, salvo por las fechas, cuándo no. Hay que usar un pequeño template method como ajuste, copiando a mano la fecha para que no lo reconvierta a string (necesita ser una instancia de un objeto que entienda el mensaje `getUTCFullYear()`):
 
 ```typescript
     // en la clase Contenido
