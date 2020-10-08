@@ -145,21 +145,22 @@ Gracias a todo lo anterior la vista que edita una serie tiene una definición br
 
 ## Componentes que forman la edición de una serie
 
-Al editar/crear una serie, debemos tener cuidado de que los dos componentes **apunten al mismo modelo**, de lo contrario no tendremos toda la información de una serie (o una película). La opción recomendada por Angular para hacer esto es [pasar por el service](https://angular.io/guide/component-interaction), por lo que en el evento onInit de cada componente pediremos al service que recupere o cree la información del componente. Vemos cómo se logra esto en el archivo _editarSerie.component.ts_:
+Al editar/crear una serie, debemos tener cuidado de que los dos componentes **apunten al mismo modelo**, de lo contrario no tendremos toda la información de una serie (o una película). La opción recomendada por Angular para hacer esto es [pasar por el service](https://angular.io/guide/component-interaction), por lo que en el evento onInit de cada componente pediremos al service que recupere o cree la información del componente. Vemos cómo se logra esto en el archivo _editarContenido.component.ts_:
 
 ```typescript
   ngOnInit() {
-    const paramId = this.route.snapshot.params.id
-    this.alta = paramId == 'new'
+    const paramId = this.route.firstChild.snapshot.params.id
+    this.alta = paramId === 'new'
     if (this.alta) {
-      this.contenido = this.contenidoService.getOrCreateContenido(this.route.snapshot.url[0].path) 
+      this.contenidoService.createContenido(this.route.firstChild.snapshot.url[0].path)
     } else {
-      this.contenido = this.contenidoService.getContenidoById(paramId)
+      this.contenidoService.updateContenidoById(paramId)
     }
+    ...
   }
 ```
 
-El método getOrCreateContenido funciona para el alta, la primera vez crea una serie o una película (en base al path que le pasamos) y lo guarda temporalmente en el service dentro de una variable:
+El método `createContenido` funciona para el alta, la primera vez crea una serie o una película (en base al path que le pasamos) y lo guarda temporalmente en el service dentro de una variable:
 
 ```typescript
 // Creamos un mapa antes de la definición de la clase ContenidoService
@@ -170,11 +171,9 @@ const tiposContenido = {
 
 export class ContenidoService {
 
-  getOrCreateContenido(tipoContenido: string) {
+  createContenido(tipoContenido: string) {
     if (!this.contenido) {
       // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
-      console.log("contenido", tiposContenido[tipoContenido])
-      console.log("que me das", tiposContenido[tipoContenido].copy())
       this.contenido = tiposContenido[tipoContenido].copy()
       this.contenido.id = this.lastId()
     }
@@ -182,24 +181,15 @@ export class ContenidoService {
   }
 ```
 
-Si ahora se ejecuta el evento onInit del _editarContenido.component.ts_:
+En el evento onInit del _editarSerie.component.ts_ tendremos el objeto creado en el service:
 
 ```typescript
   ngOnInit() {
-    const paramId = this.route.firstChild.snapshot.params.id
-    const alta = paramId == 'new'
-    if (alta) {
-      this.contenido = this.contenidoService.getOrCreateContenido(this.route.firstChild.snapshot.url[0].path)
-    } else {
-      this.contenido = this.contenidoService.getContenidoById(paramId)
-    }
-    this.contenidoOld = this.contenido.copy()
+    this.contenido = this.contenidoService.contenido
   }
 ```
 
-el getOrCreateContenido devuelve el objeto Serie ya creado (y con un identificador).
-
-Como trabajo futuro queda la posibilidad de unificar las ideas que se repiten en ambos componentes yendo hacia una superclase común.
+el contenidoService tiene una referencia `contenido` que tiene el objeto Serie ya creado (y con un identificador).
 
 ## Botón Aceptar
 
@@ -232,7 +222,10 @@ El método eliminar en realidad busca el elemento por id, no exactamente ese obj
 
 ```typescript
   eliminar(contenido: Contenido): void {
-    this.contenidos = _.remove(this.contenidos, contenido)
+    const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
+    if (index !== -1) {
+      this.contenidos.splice(index, 1)
+    }
   }
 ```
 

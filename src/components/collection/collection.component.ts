@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { remove } from 'lodash'
 
 @Component({
   selector: 'app-collection',
@@ -36,25 +35,11 @@ export class CollectionComponent implements OnInit {
     this.value = ''
   }
 
-  eliminar(elem) {
+  eliminar(index) {
     this.errorMessage = ''
-
-    // usamos Lodash: https://lodash.com/docs/latest#remove
-    // importamos remove como función, 
-    // una alternativa es usarlo como objeto _.remove(...)
-    // e importarlo como `import * as _ from 'lodash'`
-    // pero eso importa TODAS las funciones y el bundle crece en tamaño
-    remove(this.elements, (e) => elem === e)
-
-    // otra opción
-    // this.elements = this.elements.filter((item) => item !== elem)
-
+    this.elements.splice(index, 1)
     // la gente en Stack Overflow anda diciendo...
     // https://stackoverflow.com/questions/15292278/how-do-i-remove-an-array-item-in-typescript
-    // const index = this.elements.findIndex((item) => item === elem)
-    // if (index > -1) {
-    //   this.elements.splice(index, 1)
-    // }
   }
 
   get inputType(): string {

@@ -69,7 +69,7 @@ export class ContenidoService {
     // según Stack Overflow
     // https://stackoverflow.com/questions/15292278/how-do-i-remove-an-array-item-in-typescript
     const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
-    if (index != -1) {
+    if (index !== -1) {
       this.contenidos.splice(index, 1)
     }
   }

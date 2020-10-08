@@ -21,6 +21,7 @@ export class EditarContenidoComponent implements OnInit {
 
   ngOnInit() {
     this.route.url.subscribe((url) => {
+      console.log('estoy cambiando el contenido')
       const paramId = this.route.firstChild.snapshot.params.id
       this.alta = paramId === 'new'
       if (this.alta) {
