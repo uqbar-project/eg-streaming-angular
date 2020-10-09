@@ -18,7 +18,7 @@ export class CollectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.elements = this.container[this.collection]
+    this.elements = this.container[this.collection] || []
   }
 
   agregar() {

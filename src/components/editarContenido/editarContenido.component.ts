@@ -21,7 +21,7 @@ export class EditarContenidoComponent implements OnInit {
 
   ngOnInit() {
     this.route.url.subscribe((url) => {
-      console.log('estoy cambiando el contenido')
+      console.log('ngOnInit - Contenido')
       const paramId = this.route.firstChild.snapshot.params.id
       this.alta = paramId === 'new'
       if (this.alta) {
@@ -31,6 +31,7 @@ export class EditarContenidoComponent implements OnInit {
       }
     })
     this.contenido = this.contenidoService.contenido
+    console.log('actualizando', this.contenidoService.contenido)
     this.contenidoOld = this.contenido.copy()
   }
 
@@ -44,6 +45,7 @@ export class EditarContenidoComponent implements OnInit {
 
   cancelar(): void {
     if (!this.alta) {
+      console.log('cancelar', this.contenidoOld)
       this.contenidoService.actualizar(this.contenidoOld)
     }
     this.navegarAHome()

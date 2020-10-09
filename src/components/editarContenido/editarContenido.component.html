@@ -4,6 +4,7 @@
     <input type="text" autocomplete="off" class="form-control" id="titulo" name="titulo"
       placeholder="Título del contenido" [(ngModel)]="contenido.titulo">
   </div>
+  <router-outlet></router-outlet>
   <div class="row">
     <div class="col-sm">
       <app-collection [container]="contenido" collection="actores" type="text" description="Actores"></app-collection>
@@ -13,7 +14,6 @@
       </app-collection>
     </div>
   </div>
-  <router-outlet></router-outlet>
   <button type="button" class="btn btn-primary" (click)="guardar()">Aceptar</button>
   &nbsp;
   <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>

@@ -15,6 +15,7 @@ export class EditarSerieComponent implements OnInit {
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log('ngOnInit - Serie')
     this.contenido = this.contenidoService.contenido
   }
 

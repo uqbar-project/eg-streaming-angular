@@ -17,7 +17,7 @@
       <tr *ngFor="let elem of elements; let i = index" class="animate-repeat">
         <td>{{elem}}</td>
         <td>
-          <button (click)="eliminar(index)" class="btn btn-primary">-</button>
+          <button (click)="eliminar(i)" class="btn btn-primary">-</button>
         </td>
       </tr>
     </tbody>

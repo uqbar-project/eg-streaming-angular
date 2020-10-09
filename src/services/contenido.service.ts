@@ -75,7 +75,7 @@ export class ContenidoService {
   }
 
   createContenido(tipoContenido: string): void {
-    // En base al string 'serie' busco en el mapa el objeto contenido (una serie) y lo copio
+    // En base al string 'serie' busco en el mapa el objeto contenido (una serie)
     this.contenido = tiposContenido[tipoContenido]()
     this.contenido.id = this.lastId()
   }
