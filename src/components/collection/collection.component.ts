@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
 
+const NUMBER_TYPE = 'number'
+const TEXT_TYPE = 'text'
+export type value = number | string
+
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
@@ -7,15 +11,15 @@ import { Component, Input, OnInit } from '@angular/core'
 })
 export class CollectionComponent implements OnInit {
 
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() container: any
-  @Input() collection: string
-  @Input() type: string
-  @Input() description: string
-  value: any
-  elements: any[]
+  @Input() collection!: string
+  @Input() type!: string
+  @Input() description!: string
+  value!: value
+  elements: value[] = []
   errorMessage = ''
-
-  constructor() { }
 
   ngOnInit() {
     this.elements = this.container[this.collection] || []
@@ -35,7 +39,7 @@ export class CollectionComponent implements OnInit {
     this.value = ''
   }
 
-  eliminar(index) {
+  eliminar(index: number) {
     this.errorMessage = ''
     this.elements.splice(index, 1)
     // la gente en Stack Overflow anda diciendo...
@@ -43,13 +47,10 @@ export class CollectionComponent implements OnInit {
   }
 
   get inputType(): string {
-    if (this.workingWithNumbers()) {
-      return 'NUMBER'
-    }
-    return 'TEXT'
+    return this.workingWithNumbers() ? NUMBER_TYPE : TEXT_TYPE
   }
 
   workingWithNumbers() {
-    return this.type.toLowerCase() === 'number'
+    return this.type.toLowerCase() === NUMBER_TYPE
   }
 }

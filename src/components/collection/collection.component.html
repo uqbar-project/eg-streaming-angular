@@ -1,8 +1,10 @@
-<div class="form-inline">
-  <label for="text1">{{description}}:&nbsp;&nbsp;</label>
-  <input type="{{inputType}}" autocomplete="off" class="form-control" id="text_{{collection}}"
-    placeholder="Ingrese un valor" [(ngModel)]="value">&nbsp;&nbsp;
-  <button (click)="agregar()" class="btn btn-primary">+</button>
+<div class="form-group">
+  <label for="text_{{collection}}">{{description}}:</label>
+  <div class="row-edition-inline">
+    <input type="{{inputType}}" autocomplete="off" class="form-control" id="text_{{collection}}"
+      placeholder="Ingrese un valor" [(ngModel)]="value">
+    <button (click)="agregar()" class="btn btn-primary">+</button>
+  </div>
 </div>
 <br>
 <div class="form-group">

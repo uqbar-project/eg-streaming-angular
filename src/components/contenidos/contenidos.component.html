@@ -16,7 +16,7 @@
   <tbody>
     <tr *ngFor="let contenido of contenidos" class="animate-repeat">
       <td class="titulo" scope="row" title="{{contenido.datosAdicionales()}}">
-        <img src="{{contenido.image()}}" title="{{contenido.label()}}">
+        <img src="{{contenido.image()}}" title="{{contenido.label}}">
         <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">
           {{contenido.titulo}}
         </a>

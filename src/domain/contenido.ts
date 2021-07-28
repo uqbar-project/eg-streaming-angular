@@ -3,7 +3,7 @@ import { isEmpty, mean } from 'lodash'
 export const ASSET_FOLDER = '/assets/images/'
 
 export abstract class Contenido {
-    id: number
+    id?: number
     titulo = ''
     actores: string[] = []
     calificaciones: number[] = []
@@ -28,11 +28,12 @@ export abstract class Contenido {
         return mean(this.calificaciones).toFixed(2).replace('.', ',')
     }
 
+    abstract get label(): string
     abstract image(): string
     abstract doValidar(): void
     abstract datosAdicionales(): string
 
-    init(data: any): void {
+    init(data: Contenido): void {
         this.id = data.id
         this.titulo = data.titulo
         this.actores = data.actores
@@ -46,6 +47,7 @@ export abstract class Contenido {
         return clone
     }
 
+    // eslint-disable-next-line
     doCopy(contenido: Contenido): void { }
 
     existe() {
@@ -56,14 +58,14 @@ export abstract class Contenido {
         return this.errors.length > 0
     }
     abstract generateCopy(): Contenido
-    abstract doInit(data: any): void
+    abstract doInit(data: Contenido): void
     abstract get type(): string
 }
 
 export class Serie extends Contenido {
-    temporadas: number
+    temporadas!: number
 
-    label() {
+    get label() {
         return 'Serie'
     }
 
@@ -75,8 +77,8 @@ export class Serie extends Contenido {
         }
     }
 
-    doInit(data: any) {
-        this.temporadas = data.temporadas
+    doInit(data: Contenido) {
+        this.temporadas = (data as Serie).temporadas
     }
 
     image() {
@@ -94,7 +96,7 @@ export class Serie extends Contenido {
 export class Pelicula extends Contenido {
     fechaRelease: Date = new Date()
 
-    label() {
+    get label() {
         return 'Película'
     }
 
@@ -113,8 +115,8 @@ export class Pelicula extends Contenido {
         }
     }
 
-    doInit(data: any) {
-        this.fechaRelease = data.fechaRelease
+    doInit(data: Contenido) {
+        this.fechaRelease = (data as Pelicula).fechaRelease
     }
 
     get type() { return 'pelicula' }

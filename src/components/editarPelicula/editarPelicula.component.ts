@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { faCalendar, faCalendarTimes } from '@fortawesome/free-solid-svg-icons'
-import { IAngularMyDpOptions } from 'angular-mydatepicker'
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker'
 
 import { Pelicula } from '../../domain/contenido'
 import { ContenidoService } from '../../services/contenido.service'
@@ -15,8 +15,8 @@ export class EditarPeliculaComponent implements OnInit {
 
   faCalendar = faCalendar
   faCalendarTimes = faCalendarTimes
-  contenido: Pelicula
-  opcionesFecha: IAngularMyDpOptions
+  contenido!: Pelicula
+  opcionesFecha!: IAngularMyDpOptions
   fechaReleaseModel = {}
 
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
@@ -35,8 +35,10 @@ export class EditarPeliculaComponent implements OnInit {
     }
   }
 
-  convertirADate(event: any): void {
-    this.contenido.fechaRelease = event.singleDate.jsDate
+  convertirADate(event: IMyDateModel): void {
+    if (!!event.singleDate?.jsDate) {
+      this.contenido.fechaRelease = event.singleDate?.jsDate
+    }
   }
 
   convertirANuevoDate(fecha: Date) {

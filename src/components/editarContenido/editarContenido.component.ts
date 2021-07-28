@@ -11,8 +11,8 @@ import { ContenidoService } from '../../services/contenido.service'
 })
 export class EditarContenidoComponent implements OnInit {
 
-  contenido: Contenido
-  contenidoOld: Contenido
+  contenido!: Contenido
+  contenidoOld!: Contenido
   alta = false
 
   constructor(private router: Router, private route: ActivatedRoute, private contenidoService: ContenidoService) {
@@ -20,17 +20,27 @@ export class EditarContenidoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.url.subscribe((url) => {
+    this.route.url.subscribe(() => {
       console.log('ngOnInit - Contenido')
-      const paramId = this.route.firstChild.snapshot.params.id
+      const route = this.route.firstChild
+      if (!route) {
+        this.navegarAHome()
+        return
+      }
+      const paramId = route.snapshot.params.id
       this.alta = paramId === 'new'
       if (this.alta) {
-        this.contenidoService.createContenido(this.route.firstChild.snapshot.url[0].path)
+        this.contenidoService.createContenido(route.snapshot.url[0].path)
       } else {
         this.contenidoService.updateContenidoById(paramId)
       }
     })
-    this.contenido = this.contenidoService.contenido
+    const contenido = this.contenidoService.contenido
+    if (!contenido) {
+      this.navegarAHome()
+      return
+    }
+    this.contenido = contenido
     console.log('actualizando', this.contenidoService.contenido)
     this.contenidoOld = this.contenido.copy()
   }

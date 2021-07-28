@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 })
 export class ContenidosComponent implements OnInit {
 
-  contenidos: Contenido[]
+  contenidos!: Contenido[]
 
   constructor(private contenidoService: ContenidoService, private router: Router) { }
 

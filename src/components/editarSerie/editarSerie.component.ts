@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
-import { Contenido } from '../../domain/contenido'
+import { Serie } from '../../domain/contenido'
 import { ContenidoService } from '../../services/contenido.service'
 
 @Component({
@@ -10,13 +10,13 @@ import { ContenidoService } from '../../services/contenido.service'
   styleUrls: ['./editarSerie.component.css']
 })
 export class EditarSerieComponent implements OnInit {
-  contenido: Contenido
+  contenido!: Serie
 
   constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     console.log('ngOnInit - Serie')
-    this.contenido = this.contenidoService.contenido
+    this.contenido = this.contenidoService.contenido as Serie
   }
 
 }

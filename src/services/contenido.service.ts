@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core'
 
 import { Contenido, Pelicula, Serie } from '../domain/contenido'
 
-const tiposContenido = {
+export type TiposContenido = {
+  [key: string]: () => Contenido
+} 
+
+const tiposContenido: TiposContenido = {
   'serie': () => new Serie(),
   'pelicula': () => new Pelicula()
 }
@@ -20,12 +24,11 @@ export class ContenidoService {
   }
   static lastId = 0
 
-  contenido: Contenido
+  contenido: Contenido | null = null
   contenidos: Contenido[] = []
 
   insertSerie(titulo: string, actores: string[], calificaciones: number[], temporadas: number) {
-    const serie = new Serie()
-    serie.init({
+    const serie = Object.assign(new Serie(), {
       id: this.lastId(),
       titulo,
       actores,
@@ -36,8 +39,7 @@ export class ContenidoService {
   }
 
   insertPelicula(titulo: string, actores: string[], calificaciones: number[], fechaRelease: Date) {
-    const peli = new Pelicula()
-    peli.init({
+    const peli = Object.assign(new Pelicula(), {
       id: this.lastId(),
       titulo,
       actores,
@@ -53,7 +55,7 @@ export class ContenidoService {
   }
 
   updateContenidoById(id: string): void {
-    this.contenido = this.contenidos.find((contenido) => contenido.id === Number(id))
+    this.contenido = this.contenidos.find((contenido) => contenido.id === Number(id)) || null
   }
 
   actualizar(contenido: Contenido): void {
@@ -76,7 +78,7 @@ export class ContenidoService {
 
   createContenido(tipoContenido: string): void {
     // En base al string 'serie' busco en el mapa el objeto contenido (una serie)
-    this.contenido = tiposContenido[tipoContenido]()
+    this.contenido = tiposContenido[tipoContenido]() || null
     this.contenido.id = this.lastId()
   }
 
