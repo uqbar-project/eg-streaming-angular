@@ -4,9 +4,9 @@ import { BrowserModule } from '@angular/platform-browser'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 
-import { CollectionComponent } from '../components/collection/collection.component'
 import { AppRoutingModule, routingComponents } from './app-routing.module'
 import { AppComponent } from './app.component'
+import { CollectionComponent } from './components/collection/collection.component'
 
 @NgModule({
   declarations: [

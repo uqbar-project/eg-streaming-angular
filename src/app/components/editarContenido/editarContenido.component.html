@@ -1,7 +1,7 @@
 <form>
   <div class="form-group">
     <label for="titulo">Título</label>
-    <input type="text" autocomplete="off" class="form-control" id="titulo" name="titulo"
+    <input data-testid="titulo" type="text" autocomplete="off" class="form-control" id="titulo" name="titulo"
       placeholder="Título del contenido" [(ngModel)]="contenido.titulo">
   </div>
   <router-outlet></router-outlet>

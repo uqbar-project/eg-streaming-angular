@@ -1,9 +1,9 @@
 <div class="form-group">
   <label for="text_{{collection}}">{{description}}:</label>
   <div class="row-edition-inline">
-    <input type="{{inputType}}" autocomplete="off" class="form-control" id="text_{{collection}}"
+    <input data-testid="value" type="{{inputType}}" autocomplete="off" class="form-control" id="text_{{collection}}"
       placeholder="Ingrese un valor" [(ngModel)]="value">
-    <button (click)="agregar()" class="btn btn-primary">+</button>
+    <button data-testid="agregar" (click)="agregar()" class="btn btn-primary">+</button>
   </div>
 </div>
 <br>
@@ -17,7 +17,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let elem of elements; let i = index" class="animate-repeat">
-        <td>{{elem}}</td>
+        <td [attr.data-testid]="'elem-' + i">{{elem}}</td>
         <td>
           <button (click)="eliminar(i)" class="btn btn-primary">-</button>
         </td>

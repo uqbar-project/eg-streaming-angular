@@ -11,7 +11,6 @@ export type value = number | string
 })
 export class CollectionComponent implements OnInit {
 
-  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() container: any
   @Input() collection!: string

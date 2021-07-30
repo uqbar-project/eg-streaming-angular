@@ -12,10 +12,12 @@ import { ContenidoService } from '../../services/contenido.service'
 export class EditarSerieComponent implements OnInit {
   contenido!: Serie
 
-  constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) { }
+  constructor(private contenidoService: ContenidoService, private route: ActivatedRoute) {
+    console.log('constructor - EditarSerie', this.contenido)
+  }
 
   ngOnInit() {
-    console.log('ngOnInit - Serie')
+    console.log('ngOnInit - Serie', this.contenidoService.contenido)
     this.contenido = this.contenidoService.contenido as Serie
   }
 

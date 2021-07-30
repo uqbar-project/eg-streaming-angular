@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let contenido of contenidos" class="animate-repeat">
+    <tr *ngFor="let contenido of contenidos" class="animate-repeat" [attr.data-testid]="'fila-' + contenido.id">
       <td class="titulo" scope="row" title="{{contenido.datosAdicionales()}}">
         <img src="{{contenido.image()}}" title="{{contenido.label}}">
         <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">
@@ -24,7 +24,7 @@
       <td>{{contenido.protagonistas}}</td>
       <td>{{contenido.popularidad}}</td>
       <td>
-        <button (click)="eliminar(contenido)" class="btn btn-primary">-</button>
+        <button (click)="eliminar(contenido)" [attr.data-testid]="'eliminar-' + contenido.id" class="btn btn-primary">-</button>
       </td>
     </tr>
   </tbody>
