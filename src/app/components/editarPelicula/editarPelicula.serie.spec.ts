@@ -1,3 +1,6 @@
+import { AngularMyDatePickerModule } from 'angular-mydatepicker'
+import { EditarPeliculaComponent } from './editarPelicula.component'
+import { Pelicula } from './../../domain/contenido'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
@@ -6,21 +9,19 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { ContenidoService } from 'src/app/services/contenido.service'
 import { AppRoutingModule } from 'src/app/app-routing.module'
 import { DebugElement } from '@angular/core'
-import { EditarSerieComponent } from './editarSerie.component'
 import { ActivatedRoute } from '@angular/router'
-import { Serie } from 'src/app/domain/contenido'
 
 
 describe('Serie Component', () => {
   let app: DebugElement
-  let fixture: ComponentFixture<EditarSerieComponent>
+  let fixture: ComponentFixture<EditarPeliculaComponent>
   let contenidoService: ContenidoService
-  let serie: Serie
+  let pelicula: Pelicula
 
   beforeEach(waitForAsync(() => {
     contenidoService = new ContenidoService()
-    serie = contenidoService.contenidos.filter((serie) => serie.type === 'serie')[0] as Serie
-    contenidoService.contenido = serie
+    pelicula = contenidoService.contenidos.filter((serie) => serie.type === 'pelicula')[0] as Pelicula
+    contenidoService.contenido = pelicula
 
     TestBed.configureTestingModule({
       imports: [
@@ -29,31 +30,32 @@ describe('Serie Component', () => {
         FormsModule,
         AppRoutingModule,
         FontAwesomeModule,
+        AngularMyDatePickerModule,
       ],
       declarations: [
-        EditarSerieComponent,
+        EditarPeliculaComponent,
       ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              params: { 'id': serie.id },
+              params: { 'id': pelicula.id },
             }
           }
         },
         { provide: ContenidoService, useValue: contenidoService },
       ],
     }).compileComponents()
-    fixture = TestBed.createComponent(EditarSerieComponent)
+    fixture = TestBed.createComponent(EditarPeliculaComponent)
     app = fixture.debugElement
     fixture.detectChanges()
   }))
 
-  it('season length is shown', waitForAsync(() => {
+  it('release date is shown', waitForAsync(() => {
     const resultHtml = app.nativeElement
-    const cantidadTemporadas = getByDataTestId(resultHtml, 'cantidadTemporadas').value
-    expect(Number(cantidadTemporadas)).toBe(serie.temporadas)
+    const fechaRelease = getByDataTestId(resultHtml, 'fechaRelease').value
+    expect(fechaRelease).toBe(pelicula.fechaRelease.toLocaleDateString('es'))
   }))
 })
 

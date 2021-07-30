@@ -33,14 +33,6 @@ export abstract class Contenido {
     abstract doValidar(): void
     abstract datosAdicionales(): string
 
-    init(data: Contenido): void {
-        this.id = data.id
-        this.titulo = data.titulo
-        this.actores = data.actores
-        this.calificaciones = data.calificaciones
-        this.doInit(data)
-    }
-
     copy(): Contenido {
         const clone = Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
         clone.doCopy(this)
@@ -58,7 +50,6 @@ export abstract class Contenido {
         return this.errors.length > 0
     }
     abstract generateCopy(): Contenido
-    abstract doInit(data: Contenido): void
     abstract get type(): string
 }
 
@@ -75,10 +66,6 @@ export class Serie extends Contenido {
         if (!this.temporadas) {
             this.errors.push('Debe ingresar cantidad de temporadas')
         }
-    }
-
-    doInit(data: Contenido) {
-        this.temporadas = (data as Serie).temporadas
     }
 
     image() {
@@ -113,10 +100,6 @@ export class Pelicula extends Contenido {
         if (!this.fechaRelease) {
             this.errors.push('Debe ingresar fecha de salida')
         }
-    }
-
-    doInit(data: Contenido) {
-        this.fechaRelease = (data as Pelicula).fechaRelease
     }
 
     get type() { return 'pelicula' }
