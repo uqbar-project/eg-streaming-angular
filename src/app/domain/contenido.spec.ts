@@ -1,4 +1,4 @@
-import { Serie } from "./contenido"
+import { Pelicula, Serie } from "./contenido"
 
 describe('Contenido domain specs', () => {
   describe('Serie spec', () => {
@@ -23,6 +23,9 @@ describe('Contenido domain specs', () => {
     })
     it('should return the correct average', () => {
       expect(serie.popularidad).toBe('9,30')
+    })
+    it('should return empty average for series with no qualifications', () => {
+      expect(new Serie().popularidad).toBe('')
     })
     it('should return the correct cast', () => {
       expect(serie.protagonistas).toBe('Jon Hamm, Christina Hendricks, January Jones, Elisabeth Moss, John Slattery')
@@ -58,6 +61,69 @@ describe('Contenido domain specs', () => {
       expect(copy.actores).toEqual(serie.actores)
       expect(copy.calificaciones).toEqual(serie.calificaciones)
       expect(copy.errors).toEqual(serie.errors)
+    })
+  })
+
+  describe('Película spec', () => {
+    let pelicula: Pelicula
+
+    beforeEach(() => {
+      pelicula = new Pelicula()
+      pelicula.fechaRelease = new Date(2001, 1, 1)
+      pelicula.titulo = 'Cruella'
+      pelicula.id = 10
+      pelicula.actores = [ 'Emma Stone', 'Emma Thompson', 'Joel Fry' ]
+      pelicula.calificaciones = [ 7, 7, 6, 9, 8, 7, 7]
+    })
+    it('should return the correct type', () => {
+      expect(pelicula.type).toBe('pelicula')
+    })
+    it('should return the correct label', () => {
+      expect(pelicula.label).toBe('Película')
+    })
+    it('should return the correct additional data', () => {
+      expect(pelicula.datosAdicionales()).toBe('Lanzado en el año 2001')
+    })
+    it('should return the correct average', () => {
+      expect(pelicula.popularidad).toBe('7,29')
+    })
+    it('should return empty average for series with no qualifications', () => {
+      expect(new Pelicula().popularidad).toBe('')
+    })
+    it('should return the correct cast', () => {
+      expect(pelicula.protagonistas).toBe('Emma Stone, Emma Thompson, Joel Fry')
+    })
+    it('should return the correct image', () => {
+      expect(pelicula.image()).toBe('/assets/images/peli.png')
+    })
+    it('should return the correct copy', () => {
+      const copy = pelicula.generateCopy()
+      expect(copy).toBeInstanceOf(Pelicula)
+    })
+    it('should detect an existent film', () => {
+      expect(pelicula.existe()).toBe(true)
+    })
+    it('should detect an unexistent film', () => {
+      expect(new Pelicula().existe()).toBe(false)
+    })
+    it('should detect a valid film', () => {
+      pelicula.validar()
+      expect(pelicula.tieneErrores()).toBe(false)
+    })
+    it('should detect an invalid film', () => {
+      const invalidFilm = new Pelicula()
+      invalidFilm.validar()
+      expect(invalidFilm.tieneErrores()).toBe(true)
+      expect(invalidFilm.errors).toEqual([ 'Debe ingresar título' ])
+    })
+    it('should make an exact copy', () => {
+      const copy = pelicula.copy() as Pelicula
+      expect(copy.id).toBe(pelicula.id)
+      expect(copy.titulo).toBe(pelicula.titulo)
+      expect(copy.fechaRelease).toBe(pelicula.fechaRelease)
+      expect(copy.actores).toEqual(pelicula.actores)
+      expect(copy.calificaciones).toEqual(pelicula.calificaciones)
+      expect(copy.errors).toEqual(pelicula.errors)
     })
   })
 })

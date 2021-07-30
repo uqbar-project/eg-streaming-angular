@@ -23,7 +23,7 @@ describe('Contenidos Component', () => {
         ContenidosComponent,
       ],
       providers: [
-        { provider: ContenidoService, useClass: ContenidoService }
+        { provider: ContenidoService, useClass: ContenidoService },
       ],
     }).compileComponents()
     fixture = TestBed.createComponent(ContenidosComponent)
@@ -31,6 +31,7 @@ describe('Contenidos Component', () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function getByDataTestId(testid: string): any {
+    fixture.detectChanges()
     const resultHtml = fixture.debugElement.nativeElement
     return resultHtml.querySelector(`[data-testid="${testid}"]`)
   }
