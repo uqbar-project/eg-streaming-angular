@@ -65,9 +65,11 @@ export class ContenidoService {
   actualizar(contenido: Contenido): void {
     console.log('contenido existe', contenido.existe(), contenido)
     if (contenido.existe()) {
-      this.eliminar(contenido)
+      const indice = this.contenidos.indexOf(contenido)
+      this.contenidos.splice(indice, 1, contenido)
+    } else {
+      this.crear(contenido)
     }
-    this.crear(contenido)
   }
 
   eliminar(contenido: Contenido): void {
