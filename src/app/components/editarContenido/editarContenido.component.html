@@ -1,4 +1,8 @@
 <form>
+  <div class="form-title">
+    <img src="{{contenido.image()}}" title="{{contenido.label}}" height="40" width="40">
+    <span class="title">Editar {{contenido.label}}</span>
+  </div> 
   <div class="form-group">
     <label for="titulo">Título</label>
     <input data-testid="titulo" type="text" autocomplete="off" class="form-control" id="titulo" name="titulo"

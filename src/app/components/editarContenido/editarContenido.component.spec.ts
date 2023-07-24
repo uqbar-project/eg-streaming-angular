@@ -8,8 +8,9 @@ import { AppRoutingModule } from 'src/app/app-routing.module'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Contenido } from 'src/app/domain/contenido'
 import { EditarContenidoComponent } from './editarContenido.component'
+import { CollectionComponent } from '../collection/collection.component'
 
-describe('Serie Component', () => {
+describe('Contenido Component', () => {
   let fixture: ComponentFixture<EditarContenidoComponent>
   let contenidoService: ContenidoService
   let contenido: Contenido
@@ -32,6 +33,7 @@ describe('Serie Component', () => {
       ],
       declarations: [
         EditarContenidoComponent,
+        CollectionComponent,
       ],
       providers: [
         {
