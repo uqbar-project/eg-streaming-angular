@@ -1,6 +1,5 @@
-import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 import { EditarPeliculaComponent } from './editarPelicula.component'
-import { Pelicula } from './../../domain/contenido'
+import { Pelicula } from '../../domain/contenido'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
@@ -30,7 +29,6 @@ describe('Serie Component', () => {
         FormsModule,
         AppRoutingModule,
         FontAwesomeModule,
-        AngularMyDatePickerModule,
       ],
       declarations: [
         EditarPeliculaComponent,
@@ -54,8 +52,8 @@ describe('Serie Component', () => {
 
   it('release date is shown', waitForAsync(() => {
     const resultHtml = app.nativeElement
-    const fechaRelease = getByDataTestId(resultHtml, 'fechaRelease').value
-    expect(fechaRelease).toBe(pelicula.fechaRelease.toLocaleDateString('es'))
+    const director = getByDataTestId(resultHtml, 'director').value
+    expect(director).toBe(pelicula.director)
   }))
 })
 

@@ -16,10 +16,8 @@
   <tbody>
     <tr *ngFor="let contenido of contenidos" class="animate-repeat" [attr.data-testid]="'fila-' + contenido.id">
       <td class="titulo" scope="row" title="{{contenido.datosAdicionales()}}">
-        <img src="{{contenido.image()}}" title="{{contenido.label}}">
-        <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">
-          {{contenido.titulo}}
-        </a>
+        <img src="{{contenido.image()}}" title="{{contenido.label}}" height="40" width="40">
+        <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">{{contenido.titulo}}</a>
       </td>
       <td>{{contenido.protagonistas}}</td>
       <td>{{contenido.popularidad}}</td>
