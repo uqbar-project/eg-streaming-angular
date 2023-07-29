@@ -69,7 +69,7 @@ export class Serie extends Contenido {
     }
 
     image() {
-        return ASSET_FOLDER + 'serie.gif'
+        return ASSET_FOLDER + 'tv-solid.svg'
     }
 
     get type() { return 'serie' }
@@ -81,24 +81,23 @@ export class Serie extends Contenido {
 }
 
 export class Pelicula extends Contenido {
-    fechaRelease: Date = new Date()
+    director = ''
 
     get label() {
         return 'Película'
     }
 
     image() {
-        return ASSET_FOLDER + 'peli.png'
+        return ASSET_FOLDER + 'film-solid.svg'
     }
 
     datosAdicionales(): string {
-        if (!this.fechaRelease) { return '' }
-        return 'Lanzado en el año ' + this.fechaRelease.getUTCFullYear()
+        return this.director ? 'dirigida por ' + this.director : ''
     }
 
     doValidar(): void {
-        if (!this.fechaRelease) {
-            this.errors.push('Debe ingresar fecha de salida')
+        if (!this.director) {
+            this.errors.push('Debe ingresar la persona que dirigió la película')
         }
     }
 
@@ -108,8 +107,8 @@ export class Pelicula extends Contenido {
         return new Pelicula()
     }
 
-    doCopy(contenido: Contenido): void {
-        this.fechaRelease = (contenido as Pelicula).fechaRelease
+    override doCopy(contenido: Contenido): void {
+        this.director = (contenido as Pelicula).director
     }
 
 }

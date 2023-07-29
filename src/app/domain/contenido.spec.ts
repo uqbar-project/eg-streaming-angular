@@ -31,7 +31,7 @@ describe('Contenido domain specs', () => {
       expect(serie.protagonistas).toBe('Jon Hamm, Christina Hendricks, January Jones, Elisabeth Moss, John Slattery')
     })
     it('should return the correct image', () => {
-      expect(serie.image()).toBe('/assets/images/serie.gif')
+      expect(serie.image()).toBe('/assets/images/tv-solid.svg')
     })
     it('should return the correct copy', () => {
       const copy = serie.generateCopy()
@@ -69,7 +69,7 @@ describe('Contenido domain specs', () => {
 
     beforeEach(() => {
       pelicula = new Pelicula()
-      pelicula.fechaRelease = new Date(2001, 1, 1)
+      pelicula.director = 'Craig Gillespie'
       pelicula.titulo = 'Cruella'
       pelicula.id = 10
       pelicula.actores = [ 'Emma Stone', 'Emma Thompson', 'Joel Fry' ]
@@ -82,7 +82,7 @@ describe('Contenido domain specs', () => {
       expect(pelicula.label).toBe('Película')
     })
     it('should return the correct additional data', () => {
-      expect(pelicula.datosAdicionales()).toBe('Lanzado en el año 2001')
+      expect(pelicula.datosAdicionales()).toBe('dirigida por Craig Gillespie')
     })
     it('should return the correct average', () => {
       expect(pelicula.popularidad).toBe('7,29')
@@ -94,7 +94,7 @@ describe('Contenido domain specs', () => {
       expect(pelicula.protagonistas).toBe('Emma Stone, Emma Thompson, Joel Fry')
     })
     it('should return the correct image', () => {
-      expect(pelicula.image()).toBe('/assets/images/peli.png')
+      expect(pelicula.image()).toBe('/assets/images/film-solid.svg')
     })
     it('should return the correct copy', () => {
       const copy = pelicula.generateCopy()
@@ -114,13 +114,13 @@ describe('Contenido domain specs', () => {
       const invalidFilm = new Pelicula()
       invalidFilm.validar()
       expect(invalidFilm.tieneErrores()).toBe(true)
-      expect(invalidFilm.errors).toEqual([ 'Debe ingresar título' ])
+      expect(invalidFilm.errors).toEqual([ 'Debe ingresar título', 'Debe ingresar la persona que dirigió la película' ])
     })
     it('should make an exact copy', () => {
       const copy = pelicula.copy() as Pelicula
       expect(copy.id).toBe(pelicula.id)
       expect(copy.titulo).toBe(pelicula.titulo)
-      expect(copy.fechaRelease).toBe(pelicula.fechaRelease)
+      expect(copy.director).toBe(pelicula.director)
       expect(copy.actores).toEqual(pelicula.actores)
       expect(copy.calificaciones).toEqual(pelicula.calificaciones)
       expect(copy.errors).toEqual(pelicula.errors)

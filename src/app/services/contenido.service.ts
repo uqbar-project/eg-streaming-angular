@@ -16,8 +16,8 @@ let lastId = 1
 function allContenidos() {
   return [
     insertSerie('Lost', ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6),
-    insertPelicula('The Wolf of Wall Street', ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], new Date(2013, 11, 23)),
-    insertPelicula('Inglorious Basterds', ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], new Date(2009, 7, 21)),
+    insertPelicula('The Wolf of Wall Street', ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], 'Martin Scorsese'),
+    insertPelicula('Inglorious Basterds', ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], 'Quentin Tarantino'),
     insertSerie('Homeland', ['Claire Danes', 'Mandy Patinkin'], [8, 8, 7, 7, 8], 8),
   ]
 } 
@@ -32,13 +32,13 @@ function insertSerie(titulo: string, actores: string[], calificaciones: number[]
   })
 }
 
-function insertPelicula(titulo: string, actores: string[], calificaciones: number[], fechaRelease: Date) {
+function insertPelicula(titulo: string, actores: string[], calificaciones: number[], director: string) {
   return Object.assign(new Pelicula(), {
     id: lastId++,
     titulo,
     actores,
     calificaciones,
-    fechaRelease,
+    director,
   })
 }
 

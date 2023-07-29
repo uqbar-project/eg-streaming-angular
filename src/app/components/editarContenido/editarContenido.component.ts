@@ -27,7 +27,7 @@ export class EditarContenidoComponent implements OnInit {
         this.navegarAHome()
         return
       }
-      const paramId = route.snapshot.params.id
+      const paramId = route.snapshot.params['id']
       this.alta = paramId === 'new'
       if (this.alta) {
         this.contenidoService.createContenido(route.snapshot.url[0].path)
