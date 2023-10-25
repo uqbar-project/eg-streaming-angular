@@ -276,25 +276,6 @@ no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, 
 
 this.generateCopy() es un **factory method** que devuelve una serie o una película.
 
-Esto "casi siempre" funciona, salvo por las fechas, cuándo no. Hay que usar un pequeño template method como ajuste, copiando a mano la fecha para que no lo reconvierta a string (necesita ser una instancia de un objeto que entienda el mensaje `getUTCFullYear()`):
-
-```typescript
-    // en la clase Contenido
-    copy(): Contenido {
-        const clone = Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
-        clone.doCopy(this)
-        return clone 
-    }
-
-    doCopy(contenido: Contenido): void {}
-
-    // en la clase Pelicula
-    doCopy(contenido: Contenido): void {
-        this.fechaRelease = (contenido as Pelicula).fechaRelease
-    }
-
-```
-
 Entonces al cancelar lo que hacemos es actualizar la colección del service con el elemento original:
 
 ```typescript

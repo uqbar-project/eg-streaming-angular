@@ -34,13 +34,8 @@ export abstract class Contenido {
     abstract datosAdicionales(): string
 
     copy(): Contenido {
-        const clone = Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
-        clone.doCopy(this)
-        return clone
+        return Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
     }
-
-    // eslint-disable-next-line
-    doCopy(contenido: Contenido): void { }
 
     existe() {
         return this.id != null && this.id > 0
@@ -105,10 +100,6 @@ export class Pelicula extends Contenido {
 
     generateCopy(): Contenido {
         return new Pelicula()
-    }
-
-    override doCopy(contenido: Contenido): void {
-        this.director = (contenido as Pelicula).director
     }
 
 }
