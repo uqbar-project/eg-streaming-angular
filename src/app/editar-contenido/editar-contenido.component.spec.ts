@@ -50,20 +50,19 @@ describe('EditarContenidoComponent', () => {
     const titulo = getByDataTestId(fixture, 'titulo').value
     expect(titulo).toBe(contenido.titulo)
   }))
-  it('update flow - save', fakeAsync(() => {
+  it('update flow - save', async () => {
     const contenido = fixture.componentInstance.contenido
     const nuevoTitulo = 'Serie A'
     contenido.titulo = nuevoTitulo
     fixture.detectChanges()
     getByDataTestId(fixture, 'guardar').click()
     fixture.detectChanges()
-    fixture.whenStable().then(() => {
-      expect(nuevoTitulo).toBe(contenido.titulo)
-      const [route] = routerSpy.navigate.calls.first().args[0]
-      expect(route).toBe('/list')
-    })
-  }))
-  it('update flow - cancel', fakeAsync(() => {
+    await fixture.whenStable()
+    expect(nuevoTitulo).toBe(contenido.titulo)
+    const [route] = routerSpy.navigate.calls.first().args[0]
+    expect(route).toBe('/list')
+  })
+  it('update flow - cancel', async () => {
     const contenido = fixture.componentInstance.contenido
     const viejoTitulo = contenido.titulo
     const nuevoTitulo = 'Serie A'
@@ -71,12 +70,11 @@ describe('EditarContenidoComponent', () => {
     fixture.detectChanges()
     getByDataTestId(fixture, 'cancelar').click()
     fixture.detectChanges()
-    fixture.whenStable().then(() => {
-      const nuevoContenido = contenidoService.getContenidoById('' + contenido.id)
-      const [route] = routerSpy.navigate.calls.first().args[0]
-      expect(route).toBe('/list')
-      expect(viejoTitulo).toBe(nuevoContenido?.titulo || '')
-    })
-  }))
+    await fixture.whenStable()
+    const [route] = routerSpy.navigate.calls.first().args[0]
+    expect(route).toBe('/list')
+    const nuevoContenido = contenidoService.getContenidoById('' + contenido.id)
+    expect(viejoTitulo).toBe(nuevoContenido?.titulo || '')
+  })
 
 })

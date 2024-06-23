@@ -61,7 +61,6 @@ export class EditarContenidoComponent implements OnInit {
 
   cancelar(): void {
     if (!this.alta) {
-      console.log('cancelar', this.contenidoOld)
       this.contenidoService.actualizar(this.contenidoOld)
     }
     this.navegarAHome()

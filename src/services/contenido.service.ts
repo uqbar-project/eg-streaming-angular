@@ -61,7 +61,7 @@ export class ContenidoService {
 
   actualizar(contenido: Contenido): void {
     const indice = this.contenidos.findIndex(unContenido => unContenido.id == contenido.id)
-    if (indice > 0) {
+    if (indice >= 0) {
       this.contenidos.splice(indice, 1, contenido)
     } else {
       this.crear(contenido)
