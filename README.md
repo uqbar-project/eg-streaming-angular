@@ -211,10 +211,12 @@ El método actualizar() del service hace lo siguiente:
 
 ```typescript
   actualizar(contenido: Contenido): void {
-    if (contenido.existe()) {
-      this.eliminar(contenido)
+    const indice = this.contenidos.findIndex(unContenido => unContenido.id == contenido.id)
+    if (indice > 0) {
+      this.contenidos.splice(indice, 1, contenido)
+    } else {
+      this.crear(contenido)
     }
-    this.crear(contenido)
   }
 ```
 
