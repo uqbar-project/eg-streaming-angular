@@ -1,7 +1,7 @@
 
 # Streaming - aplicación compleja en Angular
 
-[![Build](https://github.com/uqbar-project/eg-streaming-angular/actions/workflows/build.yml/badge.svg)](https://github.com/uqbar-project/eg-streaming-angular/actions/workflows/build.yml) ![Coverage](./badges/eg-streaming-angular/coverage.svg)
+[![Build](https://github.com/uqbar-project/eg-streaming-angular/actions/workflows/build.yml/badge.svg)](https://github.com/uqbar-project/eg-streaming-angular/actions/workflows/build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-streaming-angular/graph/badge.svg?token=6TZxO1bSo4)](https://codecov.io/gh/uqbar-project/eg-streaming-angular)
 
 Este ejemplo permite mostrar cómo se puede reutilizar componentes visuales y funcionalidades en Angular. 
 
