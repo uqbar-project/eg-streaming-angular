@@ -1,0 +1,31 @@
+<div class="form-inline">
+  <button data-testid="nueva-serie" type="button" class="btn btn-info" (click)="nuevaSerie()">Nueva serie</button>
+  &nbsp;
+  <button data-testid="nueva-pelicula" type="button" class="btn btn-secondary" (click)="nuevaPelicula()">Nueva película</button>
+</div>
+<br>
+<table class="table table-responsive-sm table-hover">
+  <thead class="table-info">
+    <tr>
+      <th scope="col">Título</th>
+      <th scope="col">Actores</th>
+      <th scope="col">Popularidad</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (contenido of contenidos; track contenido) {
+      <tr class="animate-repeat" [attr.data-testid]="'fila-' + contenido.id">
+        <td class="titulo" scope="row" title="{{contenido.datosAdicionales()}}">
+          <img src="{{contenido.image()}}" title="{{contenido.label}}" height="30" width="30">
+          <a routerLink="/edit/{{contenido.type}}/{{contenido.id}}" routerLinkActive="active">{{contenido.titulo}}</a>
+        </td>
+        <td>{{contenido.protagonistas}}</td>
+        <td>{{contenido.popularidad}}</td>
+        <td>
+          <button (click)="eliminar(contenido)" [attr.data-testid]="'eliminar-' + contenido.id" class="btn btn-primary">-</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

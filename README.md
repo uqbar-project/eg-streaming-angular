@@ -63,10 +63,10 @@ pero se diferencian
 
 Entonces vamos a trabajar con un componente padre: EditarContenidoComponent que va a editar los campos comunes entre serie y película, y además tendremos dos componentes específicos EditarSerieComponent y EditarPeliculaComponent que le agregarán los campos propios de cada entidad.
 
-En el archivo _app-routing.module.ts_ definimos dos hijos para la ruta que edita un contenido:
+En el archivo _app.routes.ts_ definimos dos hijos para la ruta que edita un contenido:
 
 ```typescript
-const routes: Routes = [
+export const routes: Routes = [
   { path: '',        redirectTo: '/list', pathMatch: 'full' },
   { path: 'list',    component: ContenidosComponent },
   { path: 'edit',    component: EditarContenidoComponent, children: [

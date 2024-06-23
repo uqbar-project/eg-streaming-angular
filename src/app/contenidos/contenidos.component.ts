@@ -1,18 +1,22 @@
 import { Component, OnInit } from '@angular/core'
-import { ContenidoService } from '../../services/contenido.service'
-import { Contenido } from '../../domain/contenido'
-import { Router } from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
+import { Contenido } from 'domain/contenido'
+import { ContenidoService } from 'services/contenido.service'
 
 @Component({
   selector: 'app-contenidos',
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './contenidos.component.html',
-  styleUrls: ['./contenidos.component.css']
+  styleUrl: './contenidos.component.css'
 })
 export class ContenidosComponent implements OnInit {
-
   contenidos!: Contenido[]
 
-  constructor(private contenidoService: ContenidoService, private router: Router) { }
+  constructor(
+    private contenidoService: ContenidoService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.contenidos = this.contenidoService.contenidos
@@ -31,5 +35,4 @@ export class ContenidosComponent implements OnInit {
     this.contenidoService.init()
     this.router.navigate(['edit/pelicula/new'])
   }
-
 }
