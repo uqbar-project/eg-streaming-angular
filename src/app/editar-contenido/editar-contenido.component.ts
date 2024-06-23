@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-
-import { Contenido } from '../../domain/contenido'
-import { ContenidoService } from '../../services/contenido.service'
+import { FormsModule } from '@angular/forms'
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router'
+import { CollectionComponent } from 'app/collection/collection.component'
+import { Contenido } from 'domain/contenido'
+import { ContenidoService } from 'services/contenido.service'
 
 @Component({
-  selector: 'app-editarContenido',
-  templateUrl: './editarContenido.component.html',
-  styleUrls: ['./editarContenido.component.css']
+  selector: 'app-editar-contenido',
+  standalone: true,
+  imports: [CollectionComponent, FormsModule, RouterOutlet],
+  templateUrl: './editar-contenido.component.html',
+  styleUrl: './editar-contenido.component.css'
 })
 export class EditarContenidoComponent implements OnInit {
-
   contenido!: Contenido
   contenidoOld!: Contenido
   alta = false
 
-  constructor(private router: Router, private route: ActivatedRoute, private contenidoService: ContenidoService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private contenidoService: ContenidoService
+  ) {
     this.contenidoService.init()
   }
 
@@ -55,7 +61,6 @@ export class EditarContenidoComponent implements OnInit {
 
   cancelar(): void {
     if (!this.alta) {
-      console.log('cancelar', this.contenidoOld)
       this.contenidoService.actualizar(this.contenidoOld)
     }
     this.navegarAHome()

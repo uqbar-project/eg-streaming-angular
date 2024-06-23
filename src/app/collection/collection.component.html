@@ -1,6 +1,6 @@
 <div class="form-group">
   <label for="text_{{collection}}">{{description}}:</label>
-  <div class="row-edition-inline">
+  <div class="input-group mb-3">
     <input data-testid="value" type="{{inputType}}" autocomplete="off" class="form-control" id="text_{{collection}}"
       placeholder="Ingrese un valor" [(ngModel)]="value">
     <button data-testid="agregar" (click)="agregar()" class="btn btn-primary">+</button>
@@ -16,15 +16,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let elem of elements; let i = index" class="animate-repeat">
-        <td [attr.data-testid]="'elem-' + i">{{elem}}</td>
-        <td>
-          <button (click)="eliminar(i)" class="btn btn-primary">-</button>
-        </td>
-      </tr>
+      @for (elem of elements; track { elem, i }; let i = $index) {
+        <tr class="animate-repeat">
+          <td [attr.data-testid]="'elem-' + i">{{elem}}</td>
+          <td>
+            <button (click)="eliminar(i)" class="btn btn-primary">-</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>
-<div *ngIf="errorMessage" class="alert alert-danger">
-  {{errorMessage}}
-</div>
+@if (errorMessage) {
+  <div class="alert alert-danger">
+    {{errorMessage}}
+  </div>
+}

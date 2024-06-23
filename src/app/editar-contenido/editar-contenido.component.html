@@ -24,4 +24,6 @@
   </div>
 </form>
 <br>
-<div class="alert alert-danger animate-repeat" *ngFor="let error of contenido.errors">{{error}}</div>
+@for (error of contenido.errors; track error) {
+  <div class="alert alert-danger animate-repeat">{{error}}</div>
+}

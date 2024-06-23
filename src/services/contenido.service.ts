@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core'
-
-import { Contenido, Pelicula, Serie } from '../domain/contenido'
+import { Contenido, Pelicula, Serie } from 'domain/contenido'
 
 export type TiposContenido = {
   [key: string]: () => Contenido
-} 
+}
 
 const tiposContenido: TiposContenido = {
   'serie': () => new Serie(),
@@ -13,14 +12,12 @@ const tiposContenido: TiposContenido = {
 
 let lastId = 1
 
-function allContenidos() {
-  return [
-    insertSerie('Lost', ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6),
-    insertPelicula('The Wolf of Wall Street', ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], 'Martin Scorsese'),
-    insertPelicula('Inglorious Basterds', ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], 'Quentin Tarantino'),
-    insertSerie('Homeland', ['Claire Danes', 'Mandy Patinkin'], [8, 8, 7, 7, 8], 8),
-  ]
-} 
+const allContenidos = () => [
+  insertSerie('Lost', ['Jorge García', 'Josh Holloway', 'Evangeline Lilly'], [4, 8, 2], 6),
+  insertPelicula('The Wolf of Wall Street', ['Leonardo Di Caprio', 'Jonah Hill'], [8, 9, 6], 'Martin Scorsese'),
+  insertPelicula('Inglorious Basterds', ['Brad Pitt', 'Melanie Laurent', 'Christoph Waltz'], [9, 7], 'Quentin Tarantino'),
+  insertSerie('Homeland', ['Claire Danes', 'Mandy Patinkin'], [8, 8, 7, 7, 8], 8),
+]
 
 function insertSerie(titulo: string, actores: string[], calificaciones: number[], temporadas: number) {
   return Object.assign(new Serie(), {
@@ -63,9 +60,8 @@ export class ContenidoService {
   }
 
   actualizar(contenido: Contenido): void {
-    console.log('contenido existe', contenido.existe(), contenido)
-    if (contenido.existe()) {
-      const indice = this.contenidos.findIndex(unContenido => unContenido.id == contenido.id)
+    const indice = this.contenidos.findIndex(unContenido => unContenido.id == contenido.id)
+    if (indice >= 0) {
       this.contenidos.splice(indice, 1, contenido)
     } else {
       this.crear(contenido)
