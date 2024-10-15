@@ -213,28 +213,14 @@ El método actualizar() del service hace lo siguiente:
   actualizar(contenido: Contenido): void {
     const indice = this.contenidos.findIndex(unContenido => unContenido.id == contenido.id)
     if (indice > 0) {
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
       this.contenidos.splice(indice, 1, contenido)
     } else {
-      this.crear(contenido)
+      // por defecto trabaja como una lista, lo agrega al final
+      this.contenidos.push(contenido)
     }
   }
 ```
-
-El método eliminar en realidad busca el elemento por id, no exactamente ese objeto:
-
-```typescript
-  eliminar(contenido: Contenido): void {
-    const index = this.contenidos.findIndex((elem) => contenido.id == elem.id)
-    if (index !== -1) {
-      this.contenidos.splice(index, 1)
-    }
-  }
-```
-
-Al eliminar y luego crearse nuevamente el contenido, esto produce que el elemento modificado se ubique al final de la lista. Las opciones que dejamos al lector son:
-
-- modificar el método actualizar para reemplazar los valores del contenido nuevo en el elemento que está en la colección en memoria
-- ordenar los contenidos de la página principal por id en forma ascendente
 
 ## Botón Cancelar
 
@@ -265,14 +251,14 @@ copy(): Contenido {
 }
 ```
 
-no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, como si fuera un JSON sin comportamiento). La solución es unir ambas propuestas:
+no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, como si fuera un JSON sin comportamiento). Pero además **hay que tener cuidado, JSON parse + JSON stringify no es idempotente**, no funciona bien con tipos de dato como las fechas, el valor _undefined_, entre otros. Tenemos una mejor alternativa:
 
 - con Object.assign() partimos de un objeto original, con métodos
-- mediante el JSON.parse(JSON.stringify(this)) obtenemos una **copia profunda** del objeto, sin que afecte a las colecciones existentes
+- mediante una nueva función primitiva `structuredClone()` presente en los nuevos navegadores obtenemos una **copia profunda** del objeto, sin que afecte a las colecciones existentes
 
 ```typescript
     copy(): Contenido {
-        return Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
+        return Object.assign(this.generateCopy(), structuredClone(this)))
     }
 ```
 
