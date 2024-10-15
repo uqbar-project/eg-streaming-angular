@@ -34,7 +34,7 @@ export abstract class Contenido {
     abstract datosAdicionales(): string
 
     copy(): Contenido {
-        return Object.assign(this.generateCopy(), JSON.parse(JSON.stringify(this)))
+        return Object.assign(this.generateCopy(), structuredClone(this))
     }
 
     existe() {
