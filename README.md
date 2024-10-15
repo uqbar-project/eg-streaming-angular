@@ -251,7 +251,7 @@ copy(): Contenido {
 }
 ```
 
-no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, como si fuera un JSON sin comportamiento). Pero además **hay que tener cuidado, JSON parse + JSON stringify no es idempotente**, no funciona bien con tipos de dato como las fechas, el valor _undefined_, entre otros. Tenemos una mejor alternativa:
+no tiene en cuenta los métodos de Serie o Película (solo copia los atributos, como si fuera un JSON sin comportamiento). Pero además [**hay que tener cuidado, JSON parse + JSON stringify no es idempotente**](https://medium.com/@pmzubar/why-json-parse-json-stringify-is-a-bad-practice-to-clone-an-object-in-javascript-b28ac5e36521), no funciona bien con tipos de dato como las fechas, el valor _undefined_, entre otros. Tenemos una mejor alternativa:
 
 - con Object.assign() partimos de un objeto original, con métodos
 - mediante una nueva función primitiva `structuredClone()` presente en los nuevos navegadores obtenemos una **copia profunda** del objeto, sin que afecte a las colecciones existentes
